@@ -1,53 +1,82 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 export class Education extends Component {
-    continue = e => {
-        e.preventDefault();
-        this.props.nextStep();
-    };
+  continue = (e) => {
+    e.preventDefault();
+    this.props.nextStep();
+  };
 
-    back = e => {
-        e.preventDefault();
-        this.props.prevStep();
-    };
+  back = (e) => {
+    e.preventDefault();
+    this.props.prevStep();
+  };
 
-    render() {
-        const { values, inputChange } = this.props;
+  render() {
+    const { values, inputChange } = this.props;
 
-        return (
-            <div className="form-container">
-                <h1 className="mb-5">Education</h1>
-                <div className="form-group">
-                    <label htmlFor="facebook">Branch</label>
-                    <input type="text" className="form-control" name="branch" onChange={inputChange('branch')} value={values.branch} />
-                </div>
-                <div className="form-group">
+    return (
+      <div className="app ">
+        <div className="form-container">
+          <h1 className="mb-5">Sign Up</h1>
+          <div className="form-group">
+            <label htmlFor="facebook">Branch</label>
+            <br />
+            <input
+              type="text"
+              className="form-control"
+              name="branch"
+              onChange={inputChange("branch")}
+              value={values.branch}
+              placeholder="Branch"
+            />
+          </div>
+          {/* <div className="form-group">
                     <label htmlFor="twitter">CollegeId</label>
+                    <br />
                     <input type="text" className="form-control" name="id" onChange={inputChange('id')} value={values.id} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="github">Division</label>
-                    <input type="text" className="form-control" name="div" onChange={inputChange('div')} value={values.div} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="github">Roll No</label>
-                    <input type="number" className="form-control" name="roll" onChange={inputChange('roll')} value={values.roll} />
-                </div>
-                
+                </div> */}
+          <div className="form-group">
+            <label htmlFor="github">Division</label>
+            <br />
+            <input
+              type="text"
+              className="form-control"
+              name="div"
+              onChange={inputChange("div")}
+              value={values.div}
+              placeholder="Division (eg.TE7)"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="github">Roll No</label>
+            <br />
+            <input
+              type="number"
+              className="form-control"
+              name="roll"
+              onChange={inputChange("roll")}
+              value={values.roll}
+              placeholder="Roll Number"
+            />
+          </div>
 
-                <br />
 
-                <div className="row">
-                    <div className="col-6">
-                        <button className="btn1" onClick={this.back}>Back</button>
-                    </div>
-                    <div className="col-6 text-right">
-                        <button className="btn" onClick={this.continue}>Continue</button>
-                    </div>
-                </div>
+          <div className="row">
+            <div className="col-12 back_continue">
+              <button className="loginbtn btn1 btnback" onClick={this.back}>
+                {"<"}
+              </button>
+              <button className="loginbtn btn1" onClick={this.continue}>
+                Submit
+              </button>
             </div>
-        )
-    }
+            <p>Already have an account ? <a href="/login">Login</a></p>
+
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default Education
+export default Education;
