@@ -13,4 +13,4 @@ const { label, errorMessage, onChange, id, ...inputProps } = props;
   )
 }
 
-export default Login
+export default Login;

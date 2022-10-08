@@ -7,13 +7,13 @@ import Navbar from "../navbar/Navbar";
 function StudentDashboard() {
   const student_box_contents = [
     { title: "Personal Details", url: "" },
-    { title: "Education Details", url: "" },
+    { title: "Academic Details", url: "/student/Academics" },
     { title: "Amcat Details", url: "" },
     { title: "Extra Curricular", url: "" },
     { title: "Internship data", url: "" },
     { title: "Competitive Exams", url: "" },
     { title: "Technical Activities", url: "" },
-    { title: "Applications", url: "" },
+    { title: "LOR Application", url: "" },
     { title: "Notices", url: "" },
   ];
 
@@ -27,11 +27,11 @@ function StudentDashboard() {
         </div>
         <div className="student_dashboard_contents">
           <div className="years">
-            <p>SE</p>
+            {/* <p>SE</p>
             <p>|</p>
             <p>TE</p>
             <p>|</p>
-            <p>BE</p>
+            <p>BE</p> */}
           </div>
           <div className="boxes_div">
             {student_box_contents.map((s) => (
