@@ -7,9 +7,14 @@ import "./yeardetails.css";
 
 function YearDetails({ year }) {
   const [selectedFile, setSelectedFile] = useState();
+  const [selectedFile2, setSelectedFile2] = useState();
   // let url;
   function changeHandler(event) {
     setSelectedFile(event.target.files[0]);
+    // url = URL.createObjectURL(event.target.files[0]);
+  }
+  function changeHandler2(event) {
+    setSelectedFile2(event.target.files[0]);
     // url = URL.createObjectURL(event.target.files[0]);
   }
   // console.log(selectedFile?.name);
@@ -45,7 +50,10 @@ function YearDetails({ year }) {
               component="label"
               size="small"
             >
-              Upload Marksheet
+              <div className="uploadmarksheet">
+                <i class="fa-solid fa-upload"></i>
+                Sem 1
+              </div>
               <input
                 hidden
                 accept=".pdf"
@@ -53,8 +61,35 @@ function YearDetails({ year }) {
                 type="file"
                 onChange={changeHandler}
               />
-            </Button>
+            <span style={{fontSize: "10px", color: "orange"}}>
             {selectedFile?.name}
+
+              </span>
+            </Button>
+            <Button
+              id="outlined-btn"
+              variant="contained"
+              component="label"
+              size="small"
+            >
+              <div className="uploadmarksheet">
+                <i class="fa-solid fa-upload"></i>
+                Sem 2
+              </div>
+              <input
+                hidden
+                accept=".pdf"
+                multiple
+                type="file"
+                onChange={changeHandler2}
+              />
+              <br />
+              <span style={{fontSize: "10px", color: "orange"}}>
+            {selectedFile2?.name}
+
+              </span>
+            </Button>
+
             <Button
               id="outlined-btn"
               variant="contained"

@@ -7,7 +7,7 @@ function AcademicDetails() {
   return (
     <div>
       <Navbar />
-      <div className="years">
+      <div className="years academic_years">
         <a href="#first">
           <p className="year">FE</p>
         </a>
