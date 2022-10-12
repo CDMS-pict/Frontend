@@ -8,6 +8,7 @@ import Form from "./components/Auth/Form";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AcademicDetails from "./components/AcademicDetails/AcademicDetails";
 import Student_Internships from "./components/Teachers/DashBoard_Components/Student_Internships";
+import Student_Internships from "./components/Teachers/DashBoard_Components/Student_Internships";
 
 function App() {
   return (
