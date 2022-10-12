@@ -7,6 +7,7 @@ import LoginForm from "./components/Auth/LoginForm";
 import Form from "./components/Auth/Form";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AcademicDetails from "./components/AcademicDetails/AcademicDetails";
+import Student_Internships from "./components/Teachers/DashBoard_Components/Student_Internships";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/dashboard" element={<StudentDashboard />} />
           <Route exact path="/signup" element={<Form />} />
           <Route exact path="/student/Academics" element={<AcademicDetails />} />
+          <Route exact path="/teachers_dashboard/internship" element={<Student_Internships />} />
         </Routes>
       </Router>
     </div>
