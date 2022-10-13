@@ -219,9 +219,23 @@ function Student_Internships() {
             <MenuItem value="">
               <em>Branch</em>
             </MenuItem>
-            <MenuItem value={10}>CS</MenuItem>
-            <MenuItem value={20}>IT</MenuItem>
-            <MenuItem value={30}>ENTC</MenuItem>
+            <MenuItem value={"CS"}>CS</MenuItem>
+            <MenuItem value={"IT"}>IT</MenuItem>
+            <MenuItem value={"ENTC"}>ENTC</MenuItem>
+          </Select>
+          <Select
+            value={age}
+            onChange={handleChange}
+            displayEmpty
+            inputProps={{ "aria-label": "Without label" }}
+          >
+            <MenuItem value="">
+              <em>Year</em>
+            </MenuItem>
+            <MenuItem value={"FE"}>FE</MenuItem>
+            <MenuItem value={'SE'}>SE</MenuItem>
+            <MenuItem value={"TE"}>TE</MenuItem>
+            <MenuItem value={"BE"}>BE</MenuItem>
           </Select>
         </div>
 

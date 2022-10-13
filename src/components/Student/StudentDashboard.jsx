@@ -8,7 +8,7 @@ function StudentDashboard() {
   const student_box_contents = [
     { title: "Personal Details", url: "" },
     { title: "Academic Details", url: "/student/Academics" },
-    { title: "Amcat Details", url: "" },
+    { title: "Placement Details", url: "" },
     { title: "Extra Curricular", url: "" },
     { title: "Internship data", url: "" },
     { title: "Competitive Exams", url: "" },
