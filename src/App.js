@@ -10,6 +10,7 @@ import AcademicDetails from "./components/AcademicDetails/AcademicDetails";
 import Student_Internships from "./components/Teachers/DashBoard_Components/Student_Internships";
 import Teachers_Dashboard from "./components/Teachers/Teachers_Dashboard";
 import Students_data from "./components/Teachers/DashBoard_Components/Students_data.jsx/Students_data";
+import Internship from "./components/Student_Internships/Internship";
 // import Student_Internships from "./components/Teachers/DashBoard_Components/Student_Internships";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/dashboard" element={<StudentDashboard />} />
           <Route exact path="/signup" element={<Form />} />
           <Route exact path="/student/Academics" element={<AcademicDetails />} />
+          <Route exact path="/student/internship" element={<Internship />} />
           <Route exact path="/teachers_dashboard" element={<Teachers_Dashboard />} />
           <Route exact path="/teachers_dashboard/internship" element={<Student_Internships />} />
           <Route exact path="/teachers_dashboard/students" element={<Students_data />} />

@@ -1,112 +1,112 @@
-import { MenuItem, Select, TextField } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import React from 'react'
-import Navbar from '../../../navbar/Navbar';
+import { MenuItem, Select, TextField } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import React from "react";
+import Navbar from "../../../navbar/Navbar";
 
 function Students_data() {
-    const [age, setAge] = React.useState("");
+  const [age, setAge] = React.useState("");
 
-    const divs = [
-      "TE1",
-      "TE2",
-      "TE3",
-      "TE4",
-      "TE5",
-      "TE6",
-      "TE7",
-      "TE8",
-      "TE9",
-      "TE10",
-      "TE11",
-    ];
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
-  
-    const columns = [
-      { field: 'id', headerName: 'ID', width: 70 },
-      { field: "fullname", headerName: "Full name", width: 250 },
-      {
-        field: "div",
-        headerName: "Division",
-        width: 90,
-      },
-      { field: "branch", headerName: "Branch", width: 90 },
-      { field: "rollno", headerName: "Roll No", width: 90 },
-      { field: "college_id", headerName: "College ID", width: 90 },
-    ];
-  
-    const rows = [
-      {
-        id: 1,
-        fullname: "lorem xyz abcd",
-        
-        branch: "ENTC",
-        div: "TE7",
-      },
-      {
-        id: 2,
-        fullname: "lorem xyz abcd",
-        
-        branch: "ENTC",
-        div: "TE7",
-      },
-      {
-        id: 3,
-        fullname: "lorem xyz abcd",
-        
-        branch: "ENTC",
-        div: "TE7",
-      },
-      {
-        id: 4,
-        fullname: "lorem xyz abcd",
-        
-        branch: "ENTC",
-        div: "TE7",
-      },
-      {
-        id: 5,
-        fullname: "lorem xyz abcd",
-        
-        branch: "ENTC",
-        div: "TE7",
-      },
-      {
-        id: 6,
-        fullname: "lorem xyz abcd",
-        
-        branch: "ENTC",
-        div: "TE7",
-      },
-      {
-        id: 7,
-        fullname: "lorem xyz abcd",
-        
-        branch: "ENTC",
-        div: "TE7",
-      },
-      {
-        id: 8,
-        fullname: "lorem xyz abcd",
-        
-        branch: "ENTC",
-        div: "TE7",
-      },
-      {
-        id: 9,
-        fullname: "lorem xyz abcd",
-        
-        branch: "ENTC",
-        div: "TE7",
-      },
-    ];
-  
+  const divs = [
+    "TE1",
+    "TE2",
+    "TE3",
+    "TE4",
+    "TE5",
+    "TE6",
+    "TE7",
+    "TE8",
+    "TE9",
+    "TE10",
+    "TE11",
+  ];
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "fullname", headerName: "Full name", width: 250 },
+    {
+      field: "div",
+      headerName: "Division",
+      width: 90,
+    },
+    { field: "branch", headerName: "Branch", width: 90 },
+    { field: "rollno", headerName: "Roll No", width: 90 },
+    { field: "college_id", headerName: "College ID", width: 90 },
+  ];
+
+  const rows = [
+    {
+      id: 1,
+      fullname: "lorem xyz abcd",
+
+      branch: "ENTC",
+      div: "TE7",
+    },
+    {
+      id: 2,
+      fullname: "lorem xyz abcd",
+
+      branch: "ENTC",
+      div: "TE7",
+    },
+    {
+      id: 3,
+      fullname: "lorem xyz abcd",
+
+      branch: "ENTC",
+      div: "TE7",
+    },
+    {
+      id: 4,
+      fullname: "lorem xyz abcd",
+
+      branch: "ENTC",
+      div: "TE7",
+    },
+    {
+      id: 5,
+      fullname: "lorem xyz abcd",
+
+      branch: "ENTC",
+      div: "TE7",
+    },
+    {
+      id: 6,
+      fullname: "lorem xyz abcd",
+
+      branch: "ENTC",
+      div: "TE7",
+    },
+    {
+      id: 7,
+      fullname: "lorem xyz abcd",
+
+      branch: "ENTC",
+      div: "TE7",
+    },
+    {
+      id: 8,
+      fullname: "lorem xyz abcd",
+
+      branch: "ENTC",
+      div: "TE7",
+    },
+    {
+      id: 9,
+      fullname: "lorem xyz abcd",
+
+      branch: "ENTC",
+      div: "TE7",
+    },
+  ];
+
   return (
     <div>
-         <Navbar />
+      <Navbar />
       <center>
-        <h2 style={{marginTop: '3%'}}>Students Data</h2>
+        <h2 style={{ marginTop: "3%" }}>Students Data</h2>
       </center>
       <div className="t_dashboard">
         <p>
@@ -160,7 +160,7 @@ function Students_data() {
               <em>Year</em>
             </MenuItem>
             <MenuItem value={"FE"}>FE</MenuItem>
-            <MenuItem value={'SE'}>SE</MenuItem>
+            <MenuItem value={"SE"}>SE</MenuItem>
             <MenuItem value={"TE"}>TE</MenuItem>
             <MenuItem value={"BE"}>BE</MenuItem>
           </Select>
@@ -168,7 +168,7 @@ function Students_data() {
 
         {/* // internship data table */}
 
-        <div style={{ height: 500, width: "100%",marginTop: "20px" }}>
+        <div style={{ height: 500, width: "100%", marginTop: "20px" }}>
           <DataGrid
             rows={rows}
             columns={columns}
@@ -178,7 +178,7 @@ function Students_data() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Students_data
+export default Students_data;

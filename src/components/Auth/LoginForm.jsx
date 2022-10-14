@@ -36,7 +36,7 @@ const LoginForm = () => {
 
   return (
     <div className="app">
-      <form onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit}>
         <h1>Login</h1>
         {inputs.map((input) => (
           <Login

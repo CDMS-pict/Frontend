@@ -10,7 +10,7 @@ function StudentDashboard() {
     { title: "Academic Details", url: "/student/Academics" },
     { title: "Placement Details", url: "" },
     { title: "Extra Curricular", url: "" },
-    { title: "Internship data", url: "" },
+    { title: "Internship data", url: "/student/internship" },
     { title: "Competitive Exams", url: "" },
     { title: "Technical Activities", url: "" },
     { title: "LOR Application", url: "" },

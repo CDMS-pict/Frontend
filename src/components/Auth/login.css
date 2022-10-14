@@ -14,7 +14,7 @@ label {
   color: gray;
 }
 
-form {
+.form {
   background-color: whitesmoke;
   padding: 50px 60px;
   border-radius: 10px;
