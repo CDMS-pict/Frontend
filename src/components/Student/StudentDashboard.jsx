@@ -6,7 +6,7 @@ import Navbar from "../navbar/Navbar";
 
 function StudentDashboard() {
   const student_box_contents = [
-    { title: "Personal Details", url: "" },
+    { title: "Personal Details", url: "/student/personal_details" },
     { title: "Academic Details", url: "/student/Academics" },
     { title: "Placement Details", url: "" },
     { title: "Extra Curricular", url: "" },
