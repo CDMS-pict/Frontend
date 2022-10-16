@@ -30,11 +30,14 @@ function Internship() {
         <FormInput label="End Date" name="End Date" placeholder="End date" />
         <FormInput label="Duration" name="Duration" placeholder="Duration" />
         <FormInput label="Role" name="Role" placeholder="role" />
+        <FormInput label="Stipend" name="Stipend" type="number" placeholder="Enter the desired Stipend" />
+
         <FormInput
           label="Description"
           name="Description"
           placeholder="Description"
         />
+
       </form>
         <div className="intern1">
     
