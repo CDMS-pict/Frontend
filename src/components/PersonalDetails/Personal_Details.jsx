@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Navbar from "../navbar/Navbar";
 import FormInput from "../Student_Internships/FormInput";
 import Address_Details from "./Address_Details";
@@ -11,7 +11,7 @@ import Tenth_Twelth from "./Tenth_Twelth";
 function Personal_Details() {
   const [edit_pesonal, setEdit_personal] = useState(true);
   const [edit_pesonal_value, setEdit_personal_value] = useState("EDIT");
-
+const inputelement = useRef();
   const handleUpdate_Personal = () => {
     window.alert("Personal Details Updated Successfully");
     setEdit_personal_value("EDIT");
@@ -63,7 +63,8 @@ function Personal_Details() {
                 label="Full Name"
                 name="full_name"
                 placeholder="Full Name"
-                value={"Chaitanya Bhagwan Lokhande"}
+                // value={"Chaitanya Bhagwan Lokhande"}
+                ref={inputelement}
                 disabled={edit_pesonal}
               />
               <FormInput
@@ -127,6 +128,13 @@ function Personal_Details() {
                 name="gender"
                 placeholder="Gender"
                 value={"Male"}
+                disabled={edit_pesonal}
+              />
+              <FormInput
+                label="Category"
+                name="category"
+                placeholder="Category"
+                value={"OBC"}
                 disabled={edit_pesonal}
               />
               <FormInput

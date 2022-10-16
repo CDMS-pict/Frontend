@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import Navbar from "../navbar/Navbar";
 import "./internship.css";
@@ -8,6 +8,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import FormInput from "./FormInput";
 import Internship_Boxes from "./Internship_Boxes";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -22,11 +23,34 @@ const style = {
 };
 
 function Internship() {
-  const [selectedFile, setSelectedFile] = useState();
+  const [selectedFile, setSelectedFile] = useState("");
+  const [company_name, setCompany_name] = useState("");
+  const [start_date, setStart_date] = useState("");
+  const [end_date, setEnd_date] = useState("");
+  const [duration, setDuration] = useState("");
+  const [role, setRole] = useState("");
+  const [desc, setDesc] = useState("");
+
   const [selectedFile2, setSelectedFile2] = useState();
   function changeHandler(event) {
-    setSelectedFile(event.target.files[0]);
+    // setSelectedFile(event.target.files[0]);
+    setFileToBase(event.target.files[0]);
   }
+  const [sfilename, setFilename] = useState("");
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setFileToBase(file);
+    // filename = file.name;
+    setFilename(file.name);
+    console.log(file);
+  };
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setSelectedFile(reader.result);
+    };
+  };
   function changeHandler2(event) {
     setSelectedFile2(event.target.files[0]);
   }
@@ -34,7 +58,33 @@ function Internship() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const datas = [{},{}];
+  const datas = [{}, {}];
+
+  const handleAddInternship = async (e) => {
+    const data = {
+      company_name,
+      start_date,
+      end_date,
+      duration,
+      role,
+      desc,
+      offer_letter: selectedFile,
+      student_id: "6346d966fad4b62d2baccee4",
+      student_name: "trial 3",
+      student_div: "TE5",
+    };
+    // const formData = new FormData();
+    // formData.append('file',selectedFile);
+    // data.offer_letter = formData;
+
+    try {
+      await axios.post("/api/internships/newInternship", data);
+      window.alert("Internship Data Added Successfully");
+    } catch (err) {
+      console.log(err);
+    }
+    // console.log(selectedFile);
+  };
 
   return (
     <>
@@ -48,11 +98,11 @@ function Internship() {
         </div>
       </div>
       <center>
-      <div className="internship_boxes">
-        {datas.map((d)=>(
-          <Internship_Boxes/>
-        ))}
-      </div>
+        <div className="internship_boxes">
+          {datas.map((d) => (
+            <Internship_Boxes />
+          ))}
+        </div>
       </center>
       <Modal
         aria-describedby="transition-modal-description"
@@ -68,30 +118,61 @@ function Internship() {
           <Box sx={style}>
             <center>
               <h2>Enter Your Internship details</h2>
-              <FormInput name="Company Name" placeholder="Enter Company name" />
-              <FormInput name="Start Date" placeholder="Start Date" />
-              <FormInput name="End Date" placeholder="End date" />
-              <FormInput name="Duration" placeholder="Duration" />
-              <FormInput name="Description" placeholder="Description" />
-             
+
+              <FormInput
+                name="Company Name"
+                placeholder="Enter Company name"
+                onChange={(e) => setCompany_name(e.target.value)}
+              />
+              <FormInput
+                name="Start Date"
+                placeholder="Start Date"
+                onChange={(e) => setStart_date(e.target.value)}
+              />
+              <FormInput
+                name="End Date"
+                placeholder="End date"
+                onChange={(e) => setEnd_date(e.target.value)}
+              />
+              <FormInput
+                name="Duration"
+                placeholder="Duration"
+                onChange={(e) => setDuration(e.target.value)}
+              />
+              <FormInput
+                name="Role"
+                placeholder="Role"
+                onChange={(e) => setRole(e.target.value)}
+              />
+              <FormInput
+                name="Description"
+                placeholder="Description"
+                onChange={(e) => setDesc(e.target.value)}
+              />
+
               <div className="intern1">
-                <Button id="outlined-btn" variant="contained" size="small">
-                  <div className="uploadoffer">
+                <Button
+                  id="outlined-btn"
+                  variant="contained"
+                  component="label"
+                  size="small"
+                >
+                  <div className="uploadmarksheet">
                     <i class="fa-solid fa-upload"></i>
-                    Offer letter
+                    Offer Letter
                   </div>
                   <input
                     hidden
                     accept=".pdf"
                     multiple
                     type="file"
-                    onChange={changeHandler}
+                    onChange={handleImage}
                   />
                   <span style={{ fontSize: "10px", color: "orange" }}>
-                    {selectedFile?.name}
+                    {sfilename}
                   </span>
                 </Button>
-                <Button id="outlined-btn" variant="contained" size="small">
+                {/* <Button id="outlined-btn" variant="contained" size="small">
                   <div className="uploadoffer">
                     <i class="fa-solid fa-upload"></i>
                     Complition Letter
@@ -107,10 +188,12 @@ function Internship() {
                   <span style={{ fontSize: "10px", color: "orange" }}>
                     {selectedFile2?.name}
                   </span>
-                </Button>
+                </Button> */}
               </div>
               <div className="submitbtndiv">
-                <Button className="internsubtn">Submit</Button>
+                <Button className="internsubtn" onClick={handleAddInternship}>
+                  Submit
+                </Button>
               </div>
             </center>
           </Box>
