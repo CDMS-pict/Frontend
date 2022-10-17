@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import React, { useState } from "react";
 import Navbar from "../navbar/Navbar";
 import "./internship.css";
@@ -31,11 +31,7 @@ function Internship() {
   const [role, setRole] = useState("");
   const [desc, setDesc] = useState("");
 
-  const [selectedFile2, setSelectedFile2] = useState();
-  function changeHandler(event) {
-    // setSelectedFile(event.target.files[0]);
-    setFileToBase(event.target.files[0]);
-  }
+
   const [sfilename, setFilename] = useState("");
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -51,9 +47,7 @@ function Internship() {
       setSelectedFile(reader.result);
     };
   };
-  function changeHandler2(event) {
-    setSelectedFile2(event.target.files[0]);
-  }
+  
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -73,10 +67,11 @@ function Internship() {
       student_name: "trial 3",
       student_div: "TE5",
     };
-    // const formData = new FormData();
-    // formData.append('file',selectedFile);
-    // data.offer_letter = formData;
 
+    if(!company_name || !start_date || !duration || !role || !desc || !selectedFile){
+      window.alert("All the fields are required");
+      return;
+    }
     try {
       await axios.post("/api/internships/newInternship", data);
       window.alert("Internship Data Added Successfully");
@@ -85,6 +80,10 @@ function Internship() {
     }
     // console.log(selectedFile);
   };
+
+
+
+  
 
   return (
     <>

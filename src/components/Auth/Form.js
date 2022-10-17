@@ -8,13 +8,12 @@ import './login.css'
 export class Form extends Component {
   state = {
     step: 1,
-    name: "",
-    email: "",
+    fullname: "",
     password: "",
     branch: "",
-    cldid: "",
+    collegeId: "",
     div: "",
-    rollno: "",
+    rollnono: "",
   };
 
   nextStep = () => {
@@ -35,8 +34,8 @@ export class Form extends Component {
 
   render() {
     const { step } = this.state;
-    const { name, email, password, branch, clgid, div, roll } = this.state;
-    const values = { name, email, password, branch, clgid, div, roll };
+    const { fullname, password, branch, collegeId, div, rollno } = this.state;
+    const values = { fullname, password, branch, collegeId, div, rollno };
 
     switch (step) {
       case 1:

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 export class Education extends Component {
   continue = (e) => {
@@ -13,7 +14,20 @@ export class Education extends Component {
 
   render() {
     const { values, inputChange } = this.props;
-
+    const handleSubmit = async(e)=>{
+      e.preventDefault();
+      values.rollno = parseInt(values.rollno);
+      console.log(values);
+      try{
+        await axios.post("/api/students/signup", values);
+        window.alert("SignUp Successful");
+        window.location.replace("/login");
+      }
+      catch(err){
+        console.log(err);
+        window.alert("Something Went's Wrong");
+      }
+    }
     return (
       <div className="app ">
         <div className="form-container">
@@ -54,8 +68,8 @@ export class Education extends Component {
               type="number"
               className="form-control"
               name="roll"
-              onChange={inputChange("roll")}
-              value={values.roll}
+              onChange={inputChange("rollno")}
+              value={values.rollno}
               placeholder="Roll Number"
             />
           </div>
@@ -66,7 +80,7 @@ export class Education extends Component {
               <button className="loginbtn btn1 btnback" onClick={this.back}>
                 {"<"}
               </button>
-              <button className="loginbtn btn1" onClick={this.continue}>
+              <button className="loginbtn btn1" onClick={handleSubmit}>
                 Submit
               </button>
             </div>

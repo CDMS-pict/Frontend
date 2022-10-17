@@ -8,7 +8,7 @@ export class PersonalInfo extends Component {
 
   render() {
     const { values, inputChange } = this.props;
-
+  
     return (
       <div className="app ">
         <div className="form-container ">
@@ -20,8 +20,8 @@ export class PersonalInfo extends Component {
               type="text"
               className="form-control"
               name="name"
-              onChange={inputChange("name")}
-              value={values.name}
+              onChange={inputChange("fullname")}
+              value={values.fullname}
               placeholder="Full Name"
             />
           </div>
@@ -32,8 +32,8 @@ export class PersonalInfo extends Component {
               type="email"
               className="form-control"
               name="email"
-              onChange={inputChange("email")}
-              value={values.email}
+              onChange={inputChange("collegeId")}
+              value={values.collegeId}
               placeholder="E2k*****@ms.pict.edu"
             />
           </div>

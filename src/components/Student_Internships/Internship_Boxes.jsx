@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import FormInput from "./FormInput";
 import "./internship.css";
+import axios from "axios";
 
 
 const style = {
@@ -22,18 +23,64 @@ const style = {
 
 
 function Internship_Boxes() {
-  const [selectedFile, setSelectedFile] = useState();
-  const [selectedFile2, setSelectedFile2] = useState();
-  function changeHandler(event) {
-    setSelectedFile(event.target.files[0]);
-  }
-  function changeHandler2(event) {
-    setSelectedFile2(event.target.files[0]);
-  }
+  const [selectedFile, setSelectedFile] = useState("");
+  const [company_name, setCompany_name] = useState("");
+  const [start_date, setStart_date] = useState("");
+  const [end_date, setEnd_date] = useState("");
+  const [duration, setDuration] = useState("");
+  const [role, setRole] = useState("");
+  const [desc, setDesc] = useState("");
+
+  const [sfilename, setFilename] = useState("");
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setFileToBase(file);
+    // filename = file.name;
+    setFilename(file.name);
+    console.log(file);
+  };
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setSelectedFile(reader.result);
+    };
+  };
+ 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+
+  const handleUpdateInternship = async (e) => {
+    const data = {
+      company_name,
+      start_date,
+      end_date,
+      duration,
+      role,
+      desc,
+      letter_of_complition: selectedFile,
+      student_id: "6346d966fad4b62d2baccee4",
+      student_name: "trial 3",
+      student_div: "TE5",
+    };
+    // const formData = new FormData();
+    // formData.append('file',selectedFile);
+    // data.offer_letter = formData;
+
+    if(!company_name || !start_date || !duration || !role || !desc || !selectedFile){
+      window.alert("All the fields are required");
+      return;
+    }
+    try {
+      await axios.put("/api/internships/updateInternship/:id", data);
+      window.alert("Internship Data Added Successfully");
+    } catch (err) {
+      console.log(err);
+    }
+    // console.log(selectedFile);
+  };
   return (
     <div>
       <div className="box">
@@ -72,31 +119,46 @@ function Internship_Boxes() {
           <Box sx={style}>
             <center>
               <h2>Edit Internship details</h2>
-              <FormInput name="Company Name" placeholder="Enter Company name" />
-              <FormInput name="Start Date" placeholder="Start Date" />
-              <FormInput name="End Date" placeholder="End date" />
-              <FormInput name="Duration" placeholder="Duration" />
-              <FormInput name="Description" placeholder="Description" />
-             
+              <FormInput
+                name="Company Name"
+                placeholder="Enter Company name"
+                onChange={(e) => setCompany_name(e.target.value)}
+              />
+              <FormInput
+                name="Start Date"
+                placeholder="Start Date"
+                onChange={(e) => setStart_date(e.target.value)}
+              />
+              <FormInput
+                name="End Date"
+                placeholder="End date"
+                onChange={(e) => setEnd_date(e.target.value)}
+              />
+              <FormInput
+                name="Duration"
+                placeholder="Duration"
+                onChange={(e) => setDuration(e.target.value)}
+              />
+              <FormInput
+                name="Role"
+                placeholder="Role"
+                onChange={(e) => setRole(e.target.value)}
+              />
+              <FormInput
+                name="Description"
+                placeholder="Description"
+                onChange={(e) => setDesc(e.target.value)}
+                
+              />
               <div className="intern1">
-                <Button id="outlined-btn" variant="contained" size="small">
-                  <div className="uploadoffer">
-                    <i class="fa-solid fa-upload"></i>
-                    Offer letter
-                  </div>
-                  <input
-                    hidden
-                    accept=".pdf"
-                    multiple
-                    type="file"
-                    onChange={changeHandler}
-                  />
-                  <span style={{ fontSize: "10px", color: "orange" }}>
-                    {selectedFile?.name}
-                  </span>
-                </Button>
-                <Button id="outlined-btn" variant="contained" size="small">
-                  <div className="uploadoffer">
+                
+              <Button
+                  id="outlined-btn"
+                  variant="contained"
+                  component="label"
+                  size="small"
+                >
+                  <div className="uploadmarksheet">
                     <i class="fa-solid fa-upload"></i>
                     Complition Letter
                   </div>
@@ -105,16 +167,15 @@ function Internship_Boxes() {
                     accept=".pdf"
                     multiple
                     type="file"
-                    onChange={changeHandler2}
+                    onChange={handleImage}
                   />
-                  <br />
                   <span style={{ fontSize: "10px", color: "orange" }}>
-                    {selectedFile2?.name}
+                    {sfilename}
                   </span>
                 </Button>
               </div>
               <div className="submitbtndiv">
-                <Button className="internsubtn">Submit</Button>
+                <Button className="internsubtn" onClick={handleUpdateInternship}>Update</Button>
               </div>
             </center>
           </Box>
