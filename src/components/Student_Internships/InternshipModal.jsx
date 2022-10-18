@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./internship.css";
 import FormInput from "./FormInput";
 import Button from "@mui/material/Button";
+import DateInput from "./DateInput";
 
 function Internship() {
   const [selectedFile, setSelectedFile] = useState();
@@ -27,14 +28,26 @@ function Internship() {
           name="Start Date"
           placeholder="Start Date"
         />
-        <FormInput label="End Date" name="End Date" placeholder="End date" />
-        <FormInput label="Duration" name="Duration" placeholder="Duration" />
         <FormInput label="Role" name="Role" placeholder="role" />
         <FormInput
           label="Description"
           name="Description"
           placeholder="Description"
         />
+        <center>
+          <DateInput
+            name="Start Date"
+            placeholder="Start Date"
+            label="Start Date"
+            onChange={(e) => setStart_date(e.target.value)}
+          />
+          <DateInput
+            name="Start Date"
+            placeholder="End Date"
+            label="End Date"
+            onChange={(e) => setEnd_date(e.target.value)}
+          />
+        </center>
       </form>
       <div className="intern1">
         <Button

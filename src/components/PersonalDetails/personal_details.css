@@ -5,11 +5,12 @@
 .details_header{
     background-color: whitesmoke;
     height: max-content;
-    padding: 1px;
+    padding: 10px;
     width: auto;
     padding-inline: 2%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .details_body{
     padding-inline: 2%;
@@ -80,7 +81,7 @@
         width: 100%;
     }
     .forminput{
-        width: 100%;
+        width: 250px;
     }
     .imgsection{
         margin-top: 5%;

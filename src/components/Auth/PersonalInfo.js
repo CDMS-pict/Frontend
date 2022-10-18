@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import logo from "../../pict_logo.jpg"
+
 
 export class PersonalInfo extends Component {
   continue = (e) => {
@@ -11,11 +13,18 @@ export class PersonalInfo extends Component {
   
     return (
       <div className="app ">
-        <div className="form-container ">
+        <div className="form-container form">
+          <div className="loginform">
+          <center>
+          <img className="logoimg" src={logo} alt="" />
+          <h4>Digital Academic Passport</h4>
+          </center>
+          <br />
           <h1 className="mb-5">Sign Up</h1>
+          {/* <br /> */}
           <div className="form-group">
-            <label htmlFor="name">Full Name</label>
-            <br />
+            <label htmlFor="name" className="signuplabel">Full Name</label>
+            {/* <br /> */}
             <input
               type="text"
               className="form-control"
@@ -26,8 +35,8 @@ export class PersonalInfo extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="email">College Id</label>
-            <br />
+            <label htmlFor="email" className="signuplabel">College Id</label>
+            {/* <br /> */}
             <input
               type="email"
               className="form-control"
@@ -39,8 +48,8 @@ export class PersonalInfo extends Component {
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <br />
+            <label className="signuplabel" htmlFor="password">Password</label>
+            {/* <br /> */}
             <input
               type="password"
               className="form-control"
@@ -56,12 +65,14 @@ export class PersonalInfo extends Component {
               <button className="btn loginbtn" onClick={this.continue}>
                 Next
               </button>
+              <br /><br />
               <center>
                 <p>
                   Already have an account ? <a href="/login">Login</a>
                 </p>
               </center>
             </center>
+          </div>
           </div>
         </div>
       </div>

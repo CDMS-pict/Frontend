@@ -46,9 +46,15 @@
   align-content: center;
   padding: 5px;
 }
+.name_student{
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: 20px;
+}
 
 @media (max-width: 600px) {
   .profile {
+    padding-inline: 4%;
   }
   .img_div {
     /* height: 20vh; */

@@ -4,7 +4,7 @@ import Boxes from "../Boxes/Boxes";
 import Profile from "../Profile/Profile";
 import Navbar from "../navbar/Navbar";
 
-function StudentDashboard() {
+function StudentDashboard({student}) {
   const student_box_contents = [
     { title: "Personal Details", url: "/student/personal_details" },
     { title: "Academic Details", url: "/student/Academics" },
@@ -23,15 +23,11 @@ function StudentDashboard() {
 
       <div className="student_dashboard">
         <div className="profile_div">
-          <Profile />
+          <Profile student={student} />
         </div>
         <div className="student_dashboard_contents">
           <div className="years">
-            {/* <p>SE</p>
-            <p>|</p>
-            <p>TE</p>
-            <p>|</p>
-            <p>BE</p> */}
+            <h3>Students Dashboard</h3>
           </div>
           <div className="boxes_div">
             {student_box_contents.map((s) => (

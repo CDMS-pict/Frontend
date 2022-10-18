@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Digital Academic Passport",
+  "name": "Digital Academic Passport",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,14 +8,14 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "logo192.jpg",
+      "type": "image/jpg",
+      "sizes": "1092x1092"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "logo512.jpg",
+      "type": "image/jpg",
+      "sizes": "1092x1092"
     }
   ],
   "start_url": ".",

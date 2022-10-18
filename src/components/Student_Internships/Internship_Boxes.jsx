@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -7,20 +7,7 @@ import Fade from "@mui/material/Fade";
 import FormInput from "./FormInput";
 import "./internship.css";
 import axios from "axios";
-
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "whitesmoke",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
+import DateInput from "./DateInput";
 
 function Internship_Boxes() {
   const [selectedFile, setSelectedFile] = useState("");
@@ -46,11 +33,10 @@ function Internship_Boxes() {
       setSelectedFile(reader.result);
     };
   };
- 
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
 
   const handleUpdateInternship = async (e) => {
     const data = {
@@ -69,7 +55,14 @@ function Internship_Boxes() {
     // formData.append('file',selectedFile);
     // data.offer_letter = formData;
 
-    if(!company_name || !start_date || !duration || !role || !desc || !selectedFile){
+    if (
+      !company_name ||
+      !start_date ||
+      !duration ||
+      !role ||
+      !desc ||
+      !selectedFile
+    ) {
       window.alert("All the fields are required");
       return;
     }
@@ -88,6 +81,7 @@ function Internship_Boxes() {
           <p className="company_name">Company Name</p>
           <p className="duration_date">2022/10/14 - 2023/01/14</p>
         </div>
+        <br />
         <div className="box_desc">
           <p>
             <b>Role: </b> Frontend Developer
@@ -101,86 +95,100 @@ function Internship_Boxes() {
           </p>
         </div>
         <div className="editbtndiv">
-        <Button variant="contained" className="editbtn" onClick={handleOpen}>
-          Edit{" "}
-        </Button>
+          <Button variant="outlined" className="editbtn e1" >
+            Offer 
+          </Button>
+          <Button variant="outlined" className="editbtn e1">
+            Complition {" "}
+          </Button>
+          <Button variant="outlined" className="editbtn" onClick={handleOpen}>
+            Edit{" "}
+          </Button>
         </div>
         <Modal
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            <center>
-              <h2>Edit Internship details</h2>
-              <FormInput
-                name="Company Name"
-                placeholder="Enter Company name"
-                onChange={(e) => setCompany_name(e.target.value)}
-              />
-              <FormInput
-                name="Start Date"
-                placeholder="Start Date"
-                onChange={(e) => setStart_date(e.target.value)}
-              />
-              <FormInput
-                name="End Date"
-                placeholder="End date"
-                onChange={(e) => setEnd_date(e.target.value)}
-              />
-              <FormInput
-                name="Duration"
-                placeholder="Duration"
-                onChange={(e) => setDuration(e.target.value)}
-              />
-              <FormInput
-                name="Role"
-                placeholder="Role"
-                onChange={(e) => setRole(e.target.value)}
-              />
-              <FormInput
-                name="Description"
-                placeholder="Description"
-                onChange={(e) => setDesc(e.target.value)}
-                
-              />
-              <div className="intern1">
-                
-              <Button
-                  id="outlined-btn"
-                  variant="contained"
-                  component="label"
-                  size="small"
-                >
-                  <div className="uploadmarksheet">
-                    <i class="fa-solid fa-upload"></i>
-                    Complition Letter
-                  </div>
-                  <input
-                    hidden
-                    accept=".pdf"
-                    multiple
-                    type="file"
-                    onChange={handleImage}
+          aria-describedby="transition-modal-description"
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <Box className="boxmodal">
+              <center>
+                <h2>Edit Internship details</h2>
+                <FormInput
+                  name="Company Name"
+                  placeholder="Enter Company name"
+                  onChange={(e) => setCompany_name(e.target.value)}
+                />
+
+                <FormInput
+                  name="Duration"
+                  placeholder="Duration"
+                  onChange={(e) => setDuration(e.target.value)}
+                />
+                <FormInput
+                  name="Role"
+                  placeholder="Role"
+                  onChange={(e) => setRole(e.target.value)}
+                />
+                <FormInput
+                  name="Description"
+                  placeholder="Description"
+                  onChange={(e) => setDesc(e.target.value)}
+                />
+                <center>
+                  <DateInput
+                    name="Start Date"
+                    placeholder="Start Date"
+                    label="Start Date"
+                    onChange={(e) => setStart_date(e.target.value)}
                   />
-                  <span style={{ fontSize: "10px", color: "orange" }}>
-                    {sfilename}
-                  </span>
-                </Button>
-              </div>
-              <div className="submitbtndiv">
-                <Button className="internsubtn" onClick={handleUpdateInternship}>Update</Button>
-              </div>
-            </center>
-          </Box>
-        </Fade>
-      </Modal>
+                  <DateInput
+                    name="Start Date"
+                    placeholder="End Date"
+                    label="End Date"
+                    onChange={(e) => setEnd_date(e.target.value)}
+                  />
+                </center>
+                <div className="intern1">
+                  <Button
+                    id="outlined-btn"
+                    variant="contained"
+                    component="label"
+                    size="small"
+                  >
+                    <div className="uploadmarksheet">
+                      <i class="fa-solid fa-upload"></i>
+                      Complition Letter
+                    </div>
+                    <input
+                      hidden
+                      accept=".pdf"
+                      multiple
+                      type="file"
+                      onChange={handleImage}
+                    />
+                  </Button>
+                </div>
+                    <span style={{ fontSize: "10px", color: "orange" }}>
+                      {sfilename}
+                    </span>
+                <div className="submitbtndiv">
+                  <Button
+                    className="internsubtn"
+                    onClick={handleUpdateInternship}
+                  >
+                    Update
+                  </Button>
+                </div>
+              </center>
+            </Box>
+          </Fade>
+        </Modal>
       </div>
     </div>
   );

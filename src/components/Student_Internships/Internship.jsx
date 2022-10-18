@@ -9,18 +9,9 @@ import Fade from "@mui/material/Fade";
 import FormInput from "./FormInput";
 import Internship_Boxes from "./Internship_Boxes";
 import axios from "axios";
+import DateInput from "./DateInput";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "whitesmoke",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+
 
 function Internship() {
   const [selectedFile, setSelectedFile] = useState("");
@@ -114,7 +105,7 @@ function Internship() {
         }}
       >
         <Fade in={open}>
-          <Box sx={style}>
+          <Box className="boxmodal">
             <center>
               <h2>Enter Your Internship details</h2>
 
@@ -123,16 +114,16 @@ function Internship() {
                 placeholder="Enter Company name"
                 onChange={(e) => setCompany_name(e.target.value)}
               />
-              <FormInput
+              {/* <FormInput
                 name="Start Date"
                 placeholder="Start Date"
                 onChange={(e) => setStart_date(e.target.value)}
-              />
-              <FormInput
+              /> */}
+              {/* <FormInput
                 name="End Date"
                 placeholder="End date"
                 onChange={(e) => setEnd_date(e.target.value)}
-              />
+              /> */}
               <FormInput
                 name="Duration"
                 placeholder="Duration"
@@ -149,12 +140,27 @@ function Internship() {
                 onChange={(e) => setDesc(e.target.value)}
               />
 
+               <center>
+               <DateInput
+                name="Start Date"
+                placeholder="Start Date"
+                label="Start Date"
+                onChange={(e) => setStart_date(e.target.value)}
+                />
+                <DateInput
+                name="Start Date"
+                placeholder="End Date"
+                label="End Date"
+                onChange={(e) => setEnd_date(e.target.value)}
+                />
+               </center>
               <div className="intern1">
                 <Button
                   id="outlined-btn"
                   variant="contained"
                   component="label"
                   size="small"
+                  className="offerbtn"
                 >
                   <div className="uploadmarksheet">
                     <i class="fa-solid fa-upload"></i>
@@ -167,16 +173,14 @@ function Internship() {
                     type="file"
                     onChange={handleImage}
                   />
-                  <span style={{ fontSize: "10px", color: "orange" }}>
-                    {sfilename}
-                  </span>
                 </Button>
+                {/* <br /> */}
                 {/* <Button id="outlined-btn" variant="contained" size="small">
                   <div className="uploadoffer">
                     <i class="fa-solid fa-upload"></i>
                     Complition Letter
-                  </div>
-                  <input
+                    </div>
+                    <input
                     hidden
                     accept=".pdf"
                     multiple
@@ -189,6 +193,9 @@ function Internship() {
                   </span>
                 </Button> */}
               </div>
+                    <span style={{ fontSize: "10px", color: "blue" }}>
+                      {sfilename}
+                    </span>
               <div className="submitbtndiv">
                 <Button className="internsubtn" onClick={handleAddInternship}>
                   Submit
