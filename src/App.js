@@ -15,6 +15,7 @@ import Personal_Details from "./components/PersonalDetails/Personal_Details";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { selectUser } from "./store/store";
 
 // import Student_Internships from "./components/Teachers/DashBoard_Components/Student_Internships";
 
@@ -23,13 +24,40 @@ function App() {
   // const [student, setStudent] = useState();
 
   console.log(isLoggedIn);
- 
+
   // console.log(isLoggedIn);
   // console.log(student);
+  const [user, setUser] = useState();
+
+  // const refreshToken = async () => {
+  //   const res = await axios
+  //     .get("/api/students/refresh", {
+  //       withCredentials: true,
+  //     })
+  //     .catch((err) => console.log(err));
+
+  //   const data = await res.data;
+  //   return data;
+  // };
+  const sednRequest = async () => {
+    const res = await axios
+      .get("/api/students/user", {
+        withCredentials: true,
+      })
+      .catch((err) => console.log(err));
+    const data = await res.data;
+    return data;
+  };
+  useEffect(() => {
+    sednRequest().then((data) => setUser(data.user));
+  }, []);
+
+  // const usertrue = localStorage.getItem("user");
+  // console.log(usertrue)
   return (
     <div className="App">
       <Router>
-        {isLoggedIn ? (
+        {user ? (
           <Routes>
             {/* <Route exact path="/" element={<LoginForm />} /> */}
             <Route exact path="/dashboard" element={<StudentDashboard />} />
@@ -42,7 +70,7 @@ function App() {
             <Route
               exact
               path="/student/personal_details"
-              element={<Personal_Details  />}
+              element={<Personal_Details />}
             />
             <Route exact path="/student/internship" element={<Internship />} />
             <Route
@@ -60,13 +88,13 @@ function App() {
               path="/teachers_dashboard/students"
               element={<Students_data />}
             />
-            <Route path="*" element={<StudentDashboard />} />
+            {/* <Route path="*" element={<StudentDashboard />} /> */}
           </Routes>
         ) : (
           <Routes>
             <Route exact path="/login" element={<LoginForm />} />
             <Route exact path="/signup" element={<Form />} />
-            <Route exact path="*" element={<LoginForm />} />
+            {/* <Route exact path="*" element={<LoginForm />} /> */}
           </Routes>
         )}
       </Router>

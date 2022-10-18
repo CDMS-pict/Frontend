@@ -7,20 +7,21 @@ import { authActions } from "../../store/store";
 
 function Navbar() {
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
-  // const sendLogoutReq = async () => {
-  //   const res = await axios.post("/api/students/logout", null, {
-  //     withCredentials: true,
-  //   });
-  //   if (res.status === 200) {
-  //     return res;
-  //   }
-  //   return new Error("Unable TO Logout. Please try again");
-  // };
-  const handleLogout = () => {
-    // sendLogoutReq().then(() => dispatch(authActions.logout()));
+  const sendLogoutReq = async () => {
+    const res = await axios.post("/api/students/logout", null, {
+      withCredentials: true,
+    });
+    if (res.status === 200) {
+      return res;
+    }
+    return new Error("Unable TO Logout. Please try again");
   };
+  const handleLogout = () => {
+    sendLogoutReq().then(() => dispatch(authActions.logout())).then(()=>window.location.replace("/login"));
+  };
+
   return (
     <div className="navbar">
       <div className="logoside">
@@ -37,12 +38,12 @@ function Navbar() {
         {/* <a href="/dashboard">Home</a> */}
         {/* <a href="/dashboard">Home</a> */}
         {!isLoggedIn && (
-        <p onClick={()=>handleLogout()}>Logout</p>
+        <p onClick={handleLogout}>Logout</p>
 
         )}
       </div>
     </div>
-  );
-}
+  )
+};
 
 export default Navbar;

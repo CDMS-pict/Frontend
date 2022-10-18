@@ -33,19 +33,24 @@ const LoginForm = () => {
   ];
 
 
-  const handleSubmit = async(e) => {
+  
+
+  const sendRequest = async () => {
+    const res = await axios
+      .post("/api/students/login", {
+        collegeId: values.collegeId,
+        password: values.password,
+      })
+      .catch((err) => console.log(err));
+    const data = await res.data;
+    return data;
+  };
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try{
-      const res = await axios.post("/api/students/login", values);
-      console.log(res.data.user);
-      dispatch(authActions.login())
-      window.alert("HellO");
-      window.location.replace("/dashboard");
-    }
-    catch(err){
-      console.log(err);
-    }
-    // sendRequest().then(()=>);
+    // send http request
+    sendRequest()
+      .then(() => dispatch(authActions.login()))
+      .then(() => window.location.replace("/dashboard"));
   };
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
