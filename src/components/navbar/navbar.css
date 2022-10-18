@@ -41,3 +41,8 @@
     margin-left: 2%;
     width: 100%;
 }
+@media (max-width:600px) {
+    .navname p{
+        font-size: 18px;
+    }
+}

@@ -38,7 +38,7 @@ function Navbar() {
         {/* <a href="/dashboard">Home</a> */}
         {/* <a href="/dashboard">Home</a> */}
         {!isLoggedIn && (
-        <p onClick={handleLogout}>Logout</p>
+        <p onClick={handleLogout}><i class="fa-sharp fa-solid fa-right-from-bracket"></i></p>
 
         )}
       </div>
