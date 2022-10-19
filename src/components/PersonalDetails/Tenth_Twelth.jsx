@@ -24,16 +24,15 @@ function Tenth_Twelth() {
     }
   };
 
-  const [selectedFile, setSelectedFile] = useState();
-  const [selectedFile2, setSelectedFile2] = useState();
+  // const [selectedFile, setSelectedFile] = useState();
+  // const [selectedFile2, setSelectedFile2] = useState();
   // let url;
-  function changeHandler(event) {
-    setSelectedFile(event.target.files[0]);
-    // url = URL.createObjectURL(event.target.files[0]);
-  }
-  function changeHandler2(event) {
-    setSelectedFile2(event.target.files[0]);
-  }
+  // function changeHandler(event) {
+  //   setSelectedFile(event.target.files[0]);
+  // }
+  // function changeHandler2(event) {
+  //   setSelectedFile2(event.target.files[0]);
+  // }
   return (
     <div>
       <div className="student_details">
@@ -73,11 +72,11 @@ function Tenth_Twelth() {
                 accept=".pdf"
                 multiple
                 type="file"
-                onChange={changeHandler2}
+                // onChange={changeHandler2}
               />
               <br />
               <span style={{ fontSize: "10px", color: "orange" }}>
-                {selectedFile?.name}
+                {/* {selectedFile?.name} */}
               </span>
             </Button>
           </div>
@@ -104,11 +103,11 @@ function Tenth_Twelth() {
                 accept=".pdf"
                 multiple
                 type="file"
-                onChange={changeHandler2}
+                // onChange={changeHandler2}
               />
               <br />
               <span style={{ fontSize: "10px", color: "orange" }}>
-                {selectedFile2?.name}
+                {/* {selectedFile2?.name} */}
               </span>
             </Button>
           </div>

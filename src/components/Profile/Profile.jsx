@@ -41,15 +41,15 @@ function Profile({student}) {
       <div className="short_details">
         <p>
           <div className="name_student">{user && user.fullname}</div>{" "}
-          e2k20104080@ms.pict.edu <br />
-          <b>Mobile no.</b> 7231955848
+          {user && user.collegeId} <br />
+          <b>Mobile no.</b>{user && user.mobileno}
         </p>
         {/* <br /> */}
         <p>
-          <b>DOB</b> : 19/07/2003 <br />
-          <b>Gender</b>: Male <br />
-          <b>Category</b>: OBC <br />
-          <b>PAN</b> : ABXXXXX7
+          <b>DOB</b> : {user && user.DOB} <br />
+          <b>Gender</b>: {user && user.gender} <br />
+          <b>Category</b>: {user && user.category} <br />
+          <b>PAN</b> : {user && user.pan}
         </p>
         {/* <br /> */}
         <p>
@@ -58,8 +58,7 @@ function Profile({student}) {
         </p>
         {/* <br /> */}
         <p>
-          <b>Current</b> <br /> Lorem ipsum dolor sit amet consectetur,
-          adipisicing elit. Nihil, enim!
+          <b>Current</b> <br /> {user && user.temporary_address }
         </p>
       </div>
       {/* <div className="view_more">

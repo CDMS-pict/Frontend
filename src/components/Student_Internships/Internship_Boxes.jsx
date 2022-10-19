@@ -8,15 +8,16 @@ import FormInput from "./FormInput";
 import "./internship.css";
 import axios from "axios";
 import DateInput from "./DateInput";
+import moment from "moment-timezone";
 
-function Internship_Boxes() {
+function Internship_Boxes({ data, user }) {
   const [selectedFile, setSelectedFile] = useState("");
-  const [company_name, setCompany_name] = useState("");
-  const [start_date, setStart_date] = useState("");
-  const [end_date, setEnd_date] = useState("");
-  const [duration, setDuration] = useState("");
-  const [role, setRole] = useState("");
-  const [desc, setDesc] = useState("");
+  // const [company_name, setCompany_name] = useState("");
+  // const [start_date, setStart_date] = useState("");
+  // const [end_date, setEnd_date] = useState("");
+  // const [duration, setDuration] = useState("");
+  // const [role, setRole] = useState("");
+  // const [desc, setDesc] = useState("");
 
   const [sfilename, setFilename] = useState("");
   const handleImage = (e) => {
@@ -39,70 +40,95 @@ function Internship_Boxes() {
   const handleClose = () => setOpen(false);
 
   const handleUpdateInternship = async (e) => {
-    const data = {
-      company_name,
-      start_date,
-      end_date,
-      duration,
-      role,
-      desc,
+    const datas = {
       letter_of_complition: selectedFile,
-      student_id: "6346d966fad4b62d2baccee4",
-      student_name: "trial 3",
-      student_div: "TE5",
+      student_id: user._id,
     };
-    // const formData = new FormData();
-    // formData.append('file',selectedFile);
-    // data.offer_letter = formData;
+    // const datas = {
+    //   company_name:
+    //     company_name !== ""
+    //       ? company_name
+    //       : data.company_name
+    //       ? data.company_name
+    //       : "",
+    //   start_date:
+    //     start_date !== "" ? start_date : data.start_date ? data.start_date : "",
+    //   end_date: end_date !== "" ? end_date : data.end_date ? data.end_date : "",
+    //   duration: duration !== "" ? duration : data.duration ? data.duration : "",
+    //   role: role !== "" ? role : data.role ? data.role : "",
+    //   desc: desc !== "" ? desc : data.desc ? data.desc : "",
+    //   letter_of_complition: selectedFile
+    // };
 
-    if (
-      !company_name ||
-      !start_date ||
-      !duration ||
-      !role ||
-      !desc ||
-      !selectedFile
-    ) {
+    if (!selectedFile) {
+      // console.log(datas);
       window.alert("All the fields are required");
       return;
     }
     try {
-      await axios.put("/api/internships/updateInternship/:id", data);
-      window.alert("Internship Data Added Successfully");
+      await axios.put(`/api/internships/updateInternship/${data._id}`, datas);
+      window.alert("Internship Data Updated Successfully");
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
     // console.log(selectedFile);
   };
+
+  const handleDelete = async () => {
+    const datas = {
+      student_id: user._id,
+    };
+    try {
+      await axios.delete(
+        `/api/internships/deleteInternship/${data._id}`,
+        datas
+      );
+      window.alert("Internship Detail Deleted Successfully");
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+      window.alert("Currently Not able to delete the internship data");
+    }
+  };
   return (
     <div>
       <div className="box">
         <div className="boxtop">
-          <p className="company_name">Company Name</p>
-          <p className="duration_date">2022/10/14 - 2023/01/14</p>
+          <p className="company_name">{data.company_name}</p>
+          <p className="duration_date">
+            {moment(data.start_date).format("YYYY-MM-DD")} -{" "}
+            {moment(data.end_date).format("YYYY-MM-DD")}
+            {/* {starting_date.getFullYear()+'-' + (starting_date.getMonth()+1) + '-'+starting_date.getDate()} */}
+          </p>
         </div>
         <br />
         <div className="box_desc">
           <p>
-            <b>Role: </b> Frontend Developer
+            <b>Role: </b> {data.role}
           </p>
+          <b>Duration: </b> {data.duration}
           <p>
-            <b>Description: </b>Lorem, ipsum dolor sit amet consectetur
-            adipisicing elit. Fugiat sint nulla iure, tempora eligendi magnam
-            aut delectus quasi sapiente aliquid Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Consequuntur praesentium dolorum
-            itaque aliquid, autem accusamus omnis sunt natus magnam nostrum.
+            <b>Description: </b>
+            {data.desc}
           </p>
         </div>
         <div className="editbtndiv">
-          <Button variant="outlined" className="editbtn e1" >
-            Offer 
-          </Button>
-          <Button variant="outlined" className="editbtn e1">
-            Complition {" "}
-          </Button>
+          {data.offer_letter && (
+            <Button variant="outlined" className="editbtn e1">
+              Offer Letter
+            </Button>
+          )}
+          {data.letter_of_complition && (
+            <Button variant="outlined" className="editbtn e1">
+              Complition Letter{" "}
+            </Button>
+          )}
           <Button variant="outlined" className="editbtn" onClick={handleOpen}>
             Edit{" "}
+          </Button>
+          <Button variant="outlined" className="editbtn" onClick={handleDelete}>
+            Delete{" "}
           </Button>
         </div>
         <Modal
@@ -122,38 +148,51 @@ function Internship_Boxes() {
                 <FormInput
                   name="Company Name"
                   placeholder="Enter Company name"
-                  onChange={(e) => setCompany_name(e.target.value)}
+                  defaultValue={data.company_name}
+                  disabled
+                  // onChange={(e) => setCompany_name(e.target.value)}
                 />
 
                 <FormInput
                   name="Duration"
                   placeholder="Duration"
-                  onChange={(e) => setDuration(e.target.value)}
+                  defaultValue={data.duration}
+                  disabled
+                  // onChange={(e) => setDuration(e.target.value)}
                 />
                 <FormInput
                   name="Role"
                   placeholder="Role"
-                  onChange={(e) => setRole(e.target.value)}
+                  defaultValue={data.role}
+                  disabled
+                  // onChange={(e) => setRole(e.target.value)}
                 />
                 <FormInput
                   name="Description"
                   placeholder="Description"
-                  onChange={(e) => setDesc(e.target.value)}
+                  defaultValue={data.desc}
+                  disabled
+                  // onChange={(e) => setDesc(e.target.value)}
                 />
-                <center>
+                {/* <center>
                   <DateInput
                     name="Start Date"
                     placeholder="Start Date"
                     label="Start Date"
+                    disabled
+                    // defaultValue={data.start_date}
                     onChange={(e) => setStart_date(e.target.value)}
                   />
                   <DateInput
                     name="Start Date"
                     placeholder="End Date"
                     label="End Date"
+                    // defaultValue={data.end_date}
+
+                    disabled
                     onChange={(e) => setEnd_date(e.target.value)}
                   />
-                </center>
+                </center> */}
                 <div className="intern1">
                   <Button
                     id="outlined-btn"
@@ -174,9 +213,15 @@ function Internship_Boxes() {
                     />
                   </Button>
                 </div>
-                    <span style={{ fontSize: "10px", color: "orange" }}>
-                      {sfilename}
-                    </span>
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "black",
+                    fontWeight: "600",
+                  }}
+                >
+                  {sfilename}
+                </span>
                 <div className="submitbtndiv">
                   <Button
                     className="internsubtn"

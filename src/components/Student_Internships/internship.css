@@ -104,6 +104,10 @@ h2 {
   box-shadow: 24;
   padding: 2%;
 }
+.boxmodal .forminput{
+  /* height: 40px; */
+  margin-bottom: -12px;
+}
 
 @media (max-width: 600px) {
   .dataheader {

@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../navbar/Navbar";
 import "./internship.css";
 import Backdrop from "@mui/material/Backdrop";
@@ -11,8 +11,6 @@ import Internship_Boxes from "./Internship_Boxes";
 import axios from "axios";
 import DateInput from "./DateInput";
 
-
-
 function Internship() {
   const [selectedFile, setSelectedFile] = useState("");
   const [company_name, setCompany_name] = useState("");
@@ -21,7 +19,6 @@ function Internship() {
   const [duration, setDuration] = useState("");
   const [role, setRole] = useState("");
   const [desc, setDesc] = useState("");
-
 
   const [sfilename, setFilename] = useState("");
   const handleImage = (e) => {
@@ -38,13 +35,51 @@ function Internship() {
       setSelectedFile(reader.result);
     };
   };
-  
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const datas = [{}, {}];
+  const [datas, setDatas] = useState([]);
+  const [user, setUser] = useState("");
 
+  // const refreshToken = async () => {
+  //   const res = await axios
+  //     .get("/api/students/refresh", {
+  //       withCredentials: true,
+  //     })
+  //     .catch((err) => console.log(err));
+
+  //   const data = await res.data;
+  //   return data;
+  // };
+  useEffect(() => {
+    const fetchInternships = async () => {
+      try {
+        const res = await axios.get(
+          `/api/internships/getallStudentInternships/${user._id}` 
+        );
+        setDatas(res.data);
+        // console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchInternships();
+  });
+  const sednRequest = async () => {
+    const res = await axios
+      .get("/api/students/user", {
+        withCredentials: true,
+      })
+      .catch((err) => console.log(err));
+    const data = await res.data;
+    return data;
+  };
+  useEffect(() => {
+    sednRequest().then((data) => setUser(data.user));
+  }, []);
+  // console.log(user);
   const handleAddInternship = async (e) => {
     const data = {
       company_name,
@@ -54,12 +89,19 @@ function Internship() {
       role,
       desc,
       offer_letter: selectedFile,
-      student_id: "6346d966fad4b62d2baccee4",
-      student_name: "trial 3",
-      student_div: "TE5",
+      student_id: user._id,
+      student_name: user.fullname,
+      student_div: user.div,
     };
 
-    if(!company_name || !start_date || !duration || !role || !desc || !selectedFile){
+    if (
+      !company_name ||
+      !start_date ||
+      !duration ||
+      !role ||
+      !desc ||
+      !selectedFile
+    ) {
       window.alert("All the fields are required");
       return;
     }
@@ -71,10 +113,6 @@ function Internship() {
     }
     // console.log(selectedFile);
   };
-
-
-
-  
 
   return (
     <>
@@ -90,7 +128,7 @@ function Internship() {
       <center>
         <div className="internship_boxes">
           {datas.map((d) => (
-            <Internship_Boxes />
+            <Internship_Boxes data={d} user ={user} />
           ))}
         </div>
       </center>
@@ -140,20 +178,20 @@ function Internship() {
                 onChange={(e) => setDesc(e.target.value)}
               />
 
-               <center>
-               <DateInput
-                name="Start Date"
-                placeholder="Start Date"
-                label="Start Date"
-                onChange={(e) => setStart_date(e.target.value)}
+              <center>
+                <DateInput
+                  name="Start Date"
+                  placeholder="Start Date"
+                  label="Start Date"
+                  onChange={(e) => setStart_date(e.target.value)}
                 />
                 <DateInput
-                name="Start Date"
-                placeholder="End Date"
-                label="End Date"
-                onChange={(e) => setEnd_date(e.target.value)}
+                  name="Start Date"
+                  placeholder="End Date"
+                  label="End Date"
+                  onChange={(e) => setEnd_date(e.target.value)}
                 />
-               </center>
+              </center>
               <div className="intern1">
                 <Button
                   id="outlined-btn"
@@ -193,9 +231,9 @@ function Internship() {
                   </span>
                 </Button> */}
               </div>
-                    <span style={{ fontSize: "10px", color: "blue" }}>
-                      {sfilename}
-                    </span>
+              <span style={{ fontSize: "12px", color: "black",fontWeight: "600" }}>
+                {sfilename}
+              </span>
               <div className="submitbtndiv">
                 <Button className="internsubtn" onClick={handleAddInternship}>
                   Submit

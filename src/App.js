@@ -15,7 +15,7 @@ import Personal_Details from "./components/PersonalDetails/Personal_Details";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { selectUser } from "./store/store";
+// import { selectUser } from "./store/store";
 
 // import Student_Internships from "./components/Teachers/DashBoard_Components/Student_Internships";
 
@@ -94,7 +94,7 @@ function App() {
           <Routes>
             <Route exact path="/login" element={<LoginForm />} />
             <Route exact path="/signup" element={<Form />} />
-            <Route exact path="/" element={<LoginForm />} />
+            {/* <Route exact path="*" element={<LoginForm />} /> */}
           </Routes>
         )}
       </Router>

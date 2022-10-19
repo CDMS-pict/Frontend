@@ -1,7 +1,9 @@
 import { Button } from "@mui/material";
-import React, { useRef, useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import Navbar from "../navbar/Navbar";
 import FormInput from "../Student_Internships/FormInput";
+import DateInput from "../Student_Internships/DateInput";
 import Address_Details from "./Address_Details";
 import defaultimg from "./default_userimg.png";
 import Parents_Details from "./Parents_Details";
@@ -11,12 +13,6 @@ import Tenth_Twelth from "./Tenth_Twelth";
 function Personal_Details() {
   const [edit_pesonal, setEdit_personal] = useState(true);
   const [edit_pesonal_value, setEdit_personal_value] = useState("EDIT");
-const inputelement = useRef();
-  const handleUpdate_Personal = () => {
-    window.alert("Personal Details Updated Successfully");
-    setEdit_personal_value("EDIT");
-    setEdit_personal(true);
-  };
 
   const handleEditAccess = (choice) => {
     switch (choice) {
@@ -30,6 +26,77 @@ const inputelement = useRef();
     }
   };
 
+  const [user, setUser] = useState("");
+
+  // const refreshToken = async () => {
+  //   const res = await axios
+  //     .get("/api/students/refresh", {
+  //       withCredentials: true,
+  //     })
+  //     .catch((err) => console.log(err));
+
+  //   const data = await res.data;
+  //   return data;
+  // };
+  const sednRequest = async () => {
+    const res = await axios
+      .get("/api/students/user", {
+        withCredentials: true,
+      })
+      .catch((err) => console.log(err));
+    const data = await res.data;
+    return data;
+  };
+  useEffect(() => {
+    sednRequest().then((data) => setUser(data.user));
+  }, []);
+  console.log(user);
+
+  const [fullname, setFullName] = useState("");
+  const [mail, setMail] = useState("");
+  const [branch, setBranch] = useState("");
+  const [div, setDiv] = useState("");
+  const [rollno, setRollno] = useState("");
+  const [mobileno, setMobileno] = useState(0);
+  const [DOB, setDob] = useState("");
+  const [gender, setGender] = useState("");
+  const [category, setCategory] = useState("");
+  const [pan, setPan] = useState("");
+  const [aadhar, setAadhar] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [bloodgrp, setBloodGrp] = useState("");
+
+  const handleUpdate = async () => {
+    try {
+      const data = {
+        fullname:
+          fullname !== "" ? fullname : (user.fullname ? user.fullname : ""),
+        mail: mail !== "" ? mail : (user.mail ? user.mail : ""),
+        branch: branch !== "" ? branch :( user.branch ? user.branch : ""),
+        div: div !== "" ? div : (user.div ? user.div : ""),
+        rollno: rollno !== "" ? rollno : (user.rollno ? user.rollno : ""),
+        mobile_no:
+          mobileno !== 0 ? mobileno : (user.mobile_no ? user.mobile_no : 0),
+        DOB: DOB !== "" ? DOB : (user.DOB ? user.DOB : ""),
+        gender: gender !== "" ? gender : (user.gender ? user.gender : ""),
+        category:
+          category !== "" ? category : (user.category ? user.category : ""),
+        pan: pan !== "" ? pan : (user.pan ? user.pan : ""),
+        aadhar: aadhar !== "" ? aadhar : (user.aadhar ? user.aadhar : ""),
+        PWD: pwd !== "" ? pwd : (user.PWD ? user.PWD : ""),
+        blood_grp:
+          bloodgrp !== "" ? bloodgrp : (user.blood_grp ? user.blood_grp : ""),
+      };
+      data.mobile_no = parseInt(data.mobile_no);
+      // console.log(data);
+      await axios.put(`/api/students/student/profile/update/${user._id}`,data);
+      setEdit_personal_value("EDIT");
+      setEdit_personal(true);
+      window.alert("Profile Updated Successfully");
+    } catch (err) {
+      console.log("Something Wents Wrong");
+    }
+  };
   return (
     <div>
       <Navbar />
@@ -41,7 +108,7 @@ const inputelement = useRef();
               onClick={() =>
                 edit_pesonal_value === "EDIT"
                   ? handleEditAccess(1)
-                  : handleUpdate_Personal()
+                  : handleUpdate()
               }
             >
               {edit_pesonal_value}
@@ -61,31 +128,41 @@ const inputelement = useRef();
             <div className="details_section">
               <FormInput
                 label="Full Name"
-                name="full_name"
+                name="fullname"
                 placeholder="Full Name"
-                // value={"Chaitanya Bhagwan Lokhande"}
-                ref={inputelement}
+                defaultValue={user.fullname}
+                onChange={(e) => setFullName(e.target.value)}
                 disabled={edit_pesonal}
               />
               <FormInput
                 label="College ID"
                 name="college_id"
                 placeholder="College ID"
-                value={"E2K20104080@ms.pict.edu"}
+                value={user && user.collegeId}
                 disabled
               />
               <FormInput
                 label="Mail ID"
                 name="mail_id"
                 placeholder="Mail ID"
-                value={"chaitanyalokhande@gmail.com"}
-                disabled
+                defaultValue={user.mail}
+                onChange={(e) => setMail(e.target.value)}
+                disabled={edit_pesonal}
+              />
+              <FormInput
+                label="Mobile No"
+                name="mobileno"
+                placeholder="Mobile No"
+                defaultValue={user.mobile_no}
+                onChange={(e) => setMobileno(e.target.value)}
+                disabled={edit_pesonal}
               />
               <FormInput
                 label="Branch"
                 name="branch"
                 placeholder="Branch"
-                value={"Electronics and Telecommunication"}
+                defaultValue={user.branch}
+                onChange={(e) => setBranch(e.target.value)}
                 disabled={edit_pesonal}
               />
               {/* <Select
@@ -106,63 +183,72 @@ const inputelement = useRef();
                 label="Division"
                 name="div"
                 placeholder="Division"
-                value={"TE7"}
+                defaultValue={user.div}
+                onChange={(e) => setDiv(e.target.value)}
                 disabled={edit_pesonal}
               />
               <FormInput
                 label="Roll no"
                 name="roll_no"
                 placeholder="Roll No"
-                value={"32331"}
+                defaultValue={user.rollno}
+                onChange={(e) => setRollno(e.target.value)}
                 disabled={edit_pesonal}
               />
-              <FormInput
+              <DateInput
                 label="DOB"
                 name="DOB"
                 placeholder="DOB"
-                value={"19/07/2003"}
+                defaultValue={user.DOB}
+                onChange={(e) => setDob(e.target.value)}
                 disabled={edit_pesonal}
               />
               <FormInput
                 label="Gender"
                 name="gender"
                 placeholder="Gender"
-                value={"Male"}
+                defaultValue={user.gender}
+                onChange={(e) => setGender(e.target.value)}
                 disabled={edit_pesonal}
               />
               <FormInput
                 label="Category"
                 name="category"
                 placeholder="Category"
-                value={"OBC"}
+                defaultValue={user.category}
+                onChange={(e) => setCategory(e.target.value)}
                 disabled={edit_pesonal}
               />
               <FormInput
                 label="PAN No"
                 name="pan"
                 placeholder="PAN No"
-                value={"BHxxxxx08"}
+                defaultValue={user.pan}
+                onChange={(e) => setPan(e.target.value)}
                 disabled={edit_pesonal}
               />
               <FormInput
                 label="Aadhar No"
                 name="Aadhar"
                 placeholder="Aadhar No"
-                value={"879xxxxxx9"}
+                defaultValue={user.aadhar}
+                onChange={(e) => setAadhar(e.target.value)}
                 disabled={edit_pesonal}
               />
               <FormInput
                 label="PWD"
                 name="pwd"
                 placeholder="PWD"
-                value={"No"}
+                defaultValue={user.PWD}
+                onChange={(e) => setPwd(e.target.value)}
                 disabled={edit_pesonal}
               />
               <FormInput
                 label="Blood Group"
                 name="blood_grp"
                 placeholder="Blood Group"
-                value={"O-"}
+                defaultValue={user.blood_grp}
+                onChange={(e) => setBloodGrp(e.target.value)}
                 disabled={edit_pesonal}
               />
             </div>
@@ -177,7 +263,7 @@ const inputelement = useRef();
 
         {/* 10th 12th details  */}
 
-        <Tenth_Twelth/>
+        <Tenth_Twelth />
 
         <br />
         <br />
