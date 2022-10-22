@@ -1,15 +1,40 @@
 import { Button } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import FormInput from "../Student_Internships/FormInput";
 
-function Address_Details() {
+function Address_Details({ user }) {
   const [edit_pesonal, setEdit_personal] = useState(true);
   const [edit_pesonal_value, setEdit_personal_value] = useState("EDIT");
 
-  const handleUpdate_Personal = () => {
-    window.alert("Parents Details Updated Successfully");
-    setEdit_personal_value("EDIT");
-    setEdit_personal(true);
+  const [permenant_Address, setP_address] = useState("");
+  const [temporary_address, setTemp_address] = useState("");
+
+  const handleUpdate_Personal = async () => {
+    try{
+      const data = {
+        permenant_Address:
+          permenant_Address !== ""
+            ? permenant_Address
+            : user.permenant_Address
+            ? user.permenant_Address
+            : "",
+        temporary_address:
+          temporary_address !== ""
+            ? temporary_address
+            : user.temporary_address
+            ? user.temporary_address
+            : "",
+      };
+      await axios.put(`/api/students/student/profile/update/${user._id}`, data);
+      setEdit_personal_value("EDIT");
+      setEdit_personal(true);
+      window.alert("Profile Updated Successfully");
+    }
+    catch(err){
+      console.log(err);
+      window.alert("Unable to Update The Data");
+    }
   };
 
   const handleEditAccess = (choice) => {
@@ -43,9 +68,8 @@ function Address_Details() {
             label="Permanant Address"
             name="permanant_address"
             placeholder="Permanant Address"
-            value={
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, expedita?"
-            }
+            defaultValue={user.permenant_Address}
+            onChange={(e) => setP_address(e.target.value)}
             disabled={edit_pesonal}
           />
 
@@ -53,9 +77,8 @@ function Address_Details() {
             label="Local Address"
             name="Local_address"
             placeholder="Local Address"
-            value={
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, expedita?"
-            }
+            defaultValue={user.temporary_address}
+            onChange={(e) => setTemp_address(e.target.value)}
             disabled={edit_pesonal}
           />
         </div>

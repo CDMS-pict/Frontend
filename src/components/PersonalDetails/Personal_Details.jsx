@@ -9,6 +9,8 @@ import defaultimg from "./default_userimg.png";
 import Parents_Details from "./Parents_Details";
 import "./personal_details.css";
 import Tenth_Twelth from "./Tenth_Twelth";
+import moment from "moment-timezone";
+
 
 function Personal_Details() {
   const [edit_pesonal, setEdit_personal] = useState(true);
@@ -199,7 +201,7 @@ function Personal_Details() {
                 label="DOB"
                 name="DOB"
                 placeholder="DOB"
-                defaultValue={user.DOB}
+                value={DOB==="" ? moment(user.DOB).format("YYYY-MM-DD") : DOB}
                 onChange={(e) => setDob(e.target.value)}
                 disabled={edit_pesonal}
               />
@@ -256,14 +258,14 @@ function Personal_Details() {
         </div>
 
         {/* parent details */}
-        <Parents_Details />
+        <Parents_Details user={user}/>
         <br />
         {/* address details  */}
-        <Address_Details />
+        <Address_Details user={user}/>
 
         {/* 10th 12th details  */}
 
-        <Tenth_Twelth />
+        <Tenth_Twelth user={user}/>
 
         <br />
         <br />

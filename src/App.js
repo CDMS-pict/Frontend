@@ -61,6 +61,7 @@ function App() {
           <Routes>
             {/* <Route exact path="/" element={<LoginForm />} /> */}
             <Route exact path="/dashboard" element={<StudentDashboard />} />
+            <Route exact path="/" element={<StudentDashboard />} />
             <Route exact path="/signup" element={<Form />} />
             <Route
               exact
@@ -94,7 +95,7 @@ function App() {
           <Routes>
             <Route exact path="/login" element={<LoginForm />} />
             <Route exact path="/signup" element={<Form />} />
-            {/* <Route exact path="*" element={<LoginForm />} /> */}
+            <Route exact path="/" element={<LoginForm />} />
           </Routes>
         )}
       </Router>

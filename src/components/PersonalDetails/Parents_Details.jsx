@@ -1,13 +1,84 @@
 import { Button } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import FormInput from "../Student_Internships/FormInput";
 
-function Parents_Details() {
+function Parents_Details({ user }) {
   const [edit_pesonal, setEdit_personal] = useState(true);
   const [edit_pesonal_value, setEdit_personal_value] = useState("EDIT");
 
-  const handleUpdate_Personal = () => {
-    window.alert("Parents Details Updated Successfully");
+  const [father_name, setFather_name] = useState("");
+  const [father_contact, setFather_contact] = useState("");
+  const [father_mail, setFahter_mail] = useState("");
+  const [father_occupation, setFather_occupation] = useState("");
+  const [mother_name, setmother_name] = useState("");
+  const [mother_contact, setmother_contact] = useState("");
+  const [mother_mail, setmother_mail] = useState("");
+  const [mother_occupation, setmother_occupation] = useState("");
+
+  const handleUpdate_Personal = async () => {
+    try {
+      const data = {
+        father_name:
+          father_name !== ""
+            ? father_name
+            : user.father_name
+            ? user.father_name
+            : "",
+        father_occupation:
+          father_occupation !== ""
+            ? father_occupation
+            : user.father_occupation
+            ? user.father_occupation
+            : "",
+        father_contact:
+          father_contact !== ""
+            ? father_contact
+            : user.father_contact
+            ? user.father_contact
+            : "",
+        father_mail:
+          father_mail !== ""
+            ? father_mail
+            : user.father_mail
+            ? user.father_mail
+            : "",
+        mother_name:
+          mother_name !== ""
+            ? mother_name
+            : user.mother_name
+            ? user.mother_name
+            : "",
+        mother_occupation:
+          mother_occupation !== ""
+            ? mother_occupation
+            : user.mother_occupation
+            ? user.mother_occupation
+            : "",
+        mother_contact:
+          mother_contact !== ""
+            ? mother_contact
+            : user.mother_contact
+            ? user.mother_contact
+            : "",
+        mother_mail:
+          mother_mail !== ""
+            ? mother_mail
+            : user.mother_mail
+            ? user.mother_mail
+            : "",
+      };
+      data.father_contact = parseInt(data.father_contact);
+      data.mother_contact = parseInt(data.mother_contact);
+      // console.log(data);
+      await axios.put(`/api/students/student/profile/update/${user._id}`, data);
+      setEdit_personal_value("EDIT");
+      setEdit_personal(true);
+      window.alert("Profile Updated Successfully");
+    } catch (err) {
+      console.log(err);
+      window.alert("Unable to Update Now");
+    }
     setEdit_personal_value("EDIT");
     setEdit_personal(true);
   };
@@ -43,57 +114,69 @@ function Parents_Details() {
             label="Father's Name"
             name="father_name"
             placeholder="Father's Name"
-            value={"Bhagwan Lokhande"}
+            defaultValue={user.father_name}
+            onChange={(e) => setFather_name(e.target.value)}
             disabled={edit_pesonal}
           />
           <FormInput
             label="Father's Occupation"
             name="father_occupation"
             placeholder="Father's Occupation"
-            value={"Employee"}
+            defaultValue={user.father_occupation}
+            onChange={(e) => setFather_occupation(e.target.value)}
             disabled={edit_pesonal}
           />
           <FormInput
             label="Father's Contact No"
             name="father_contact"
             placeholder="Father's Contact No"
-            value={"+91-8192891211"}
+            defaultValue={user.father_contact}
+            onChange={(e) => setFather_contact(e.target.value)}
             disabled={edit_pesonal}
+            type="number"
           />
           <FormInput
             label="Father's Mail"
             name="father_mail"
             placeholder="Father's Mail"
-            value={"abcded@gmail.com"}
+            defaultValue={user.father_mail}
+            onChange={(e) => setFahter_mail(e.target.value)}
             disabled={edit_pesonal}
+            type="email"
           />
           <FormInput
             label="Mother's Name"
             name="Mother_name"
             placeholder="Mother's Name"
-            value={"Bhagwan Lokhande"}
+            defaultValue={user.mother_name}
+            onChange={(e) => setmother_name(e.target.value)}
             disabled={edit_pesonal}
           />
           <FormInput
             label="Mother's Occupation"
             name="Mother_occupation"
             placeholder="Mother's Occupation"
-            value={"Employee"}
+            defaultValue={user.mother_occupation}
+            onChange={(e) => setmother_occupation(e.target.value)}
             disabled={edit_pesonal}
           />
           <FormInput
             label="Mother's Contact No"
             name="Mother_contact"
             placeholder="Mother's Contact No"
-            value={"+91-8192891211"}
+            defaultValue={user.mother_contact}
+            onChange={(e) => setmother_contact(e.target.value)}
             disabled={edit_pesonal}
+            type="number"
           />
           <FormInput
             label="Mother's Mail"
             name="Mother_mail"
             placeholder="Mother's Mail"
-            value={"abcded@gmail.com"}
+            defaultValue={user.mother_mail}
+            onChange={(e) => setmother_mail(e.target.value)}
             disabled={edit_pesonal}
+            type="email"
           />
         </div>
       </div>

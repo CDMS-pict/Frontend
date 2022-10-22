@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./profile.css";
 import defaultimg from "./default_userimg.png";
 import axios from "axios";
+import moment from "moment-timezone";
 axios.defaults.withCredentials = true;
 // let firstRender = true;
 function Profile({student}) {
@@ -46,7 +47,7 @@ function Profile({student}) {
         </p>
         {/* <br /> */}
         <p>
-          <b>DOB</b> : {user && user.DOB} <br />
+          <b>DOB</b> : {user && moment(user.DOB).format("YYYY-MM-DD")} <br />
           <b>Gender</b>: {user && user.gender} <br />
           <b>Category</b>: {user && user.category} <br />
           <b>PAN</b> : {user && user.pan}

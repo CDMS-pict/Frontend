@@ -9,9 +9,17 @@
   padding: 2%;
   /* box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px; */
   height: 84vh;
-  background-color: #3B3A41;
-  background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%);
-  background: radial-gradient(circle at -4% -12.9%, rgb(74, 98, 110) 0.3%, rgb(30, 33, 48) 90.2%);
+  background-color: #3b3a41;
+  background: radial-gradient(
+    circle at 24.1% 68.8%,
+    rgb(50, 50, 50) 0%,
+    rgb(0, 0, 0) 99.4%
+  );
+  background: radial-gradient(
+    circle at -4% -12.9%,
+    rgb(74, 98, 110) 0.3%,
+    rgb(30, 33, 48) 90.2%
+  );
   background: whitesmoke;
   color: black;
 }
@@ -47,7 +55,8 @@
   .student_dashboard {
     flex-direction: column;
     /* margin-bottom: 5%; */
-    height: auto;
+    height: max-content;
+    justify-content: center;
   }
   .profile_div {
     width: 100%;
@@ -61,9 +70,10 @@
   }
   .student_dashboard_contents {
     margin-top: 0%;
-    height: 100vh;
-    overflow-y: none;
+    height: max-content;
+    overflow-y: hidden;
     /* width: 100%; */
+    /* padding-inline: 0%; */
   }
   .boxes_div {
     width: 100%;
