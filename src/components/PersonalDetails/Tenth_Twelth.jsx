@@ -82,23 +82,27 @@ function Tenth_Twelth({ user }) {
       twelth_p_c:
         twelth_p_c !== "" ? twelth_p_c : user.twelth_p_c ? user.twelth_p_c : "",
     };
-    if (!selectedFile || !selectedFile1 || tenth_p_c==="" || twelth_p_c==="") {
-      window.alert("All the fields are required");
-      return;
-    }
+    // if (!selectedFile || !selectedFile1 ) {
+    //   window.alert("All the fields are required");
+    //   return;
+    // }
     try {
       await axios.put(
         `/api/students/student/profile/update/${user._id}`,
         data_t_tw
       );
+     if(selectedFile){
       await axios.put(
         `/api/students/student/profile/update_t_marks/${user._id}`,
         data_t
       );
-      await axios.put(
-        `/api/students/student/profile/update_tw_marks/${user._id}`,
-        data_tw
-      );
+     }
+      if(selectedFile1){
+        await axios.put(
+          `/api/students/student/profile/update_tw_marks/${user._id}`,
+          data_tw
+        );
+      }
       setEdit_personal_value("EDIT");
       setEdit_personal(true);
       window.alert("Profile Updated Successfully");

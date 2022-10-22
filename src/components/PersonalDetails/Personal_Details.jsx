@@ -11,11 +11,31 @@ import "./personal_details.css";
 import Tenth_Twelth from "./Tenth_Twelth";
 import moment from "moment-timezone";
 
-
 function Personal_Details() {
   const [edit_pesonal, setEdit_personal] = useState(true);
   const [edit_pesonal_value, setEdit_personal_value] = useState("EDIT");
 
+  // const [selectedFile, setSelectedFile] = useState("");
+  const [selectedFile1, setSelectedFile1] = useState("");
+  const [dp,setDp] = useState("");
+
+  const [sfilename1, setFilename1] = useState("");
+
+  const handleImage1 = (e) => {
+    const file = e.target.files[0];
+    setDp(file);
+    setFileToBase1(file);
+    setFilename1(file.name);
+    // console.log(file);
+  };
+
+  const setFileToBase1 = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setSelectedFile1(reader.result);
+    };
+  };
   const handleEditAccess = (choice) => {
     switch (choice) {
       case 1: {
@@ -70,28 +90,34 @@ function Personal_Details() {
 
   const handleUpdate = async () => {
     try {
+      const dp_data = {
+        profile:selectedFile1
+      }
       const data = {
         fullname:
-          fullname !== "" ? fullname : (user.fullname ? user.fullname : ""),
-        mail: mail !== "" ? mail : (user.mail ? user.mail : ""),
-        branch: branch !== "" ? branch :( user.branch ? user.branch : ""),
-        div: div !== "" ? div : (user.div ? user.div : ""),
-        rollno: rollno !== "" ? rollno : (user.rollno ? user.rollno : ""),
+          fullname !== "" ? fullname : user.fullname ? user.fullname : "",
+        mail: mail !== "" ? mail : user.mail ? user.mail : "",
+        branch: branch !== "" ? branch : user.branch ? user.branch : "",
+        div: div !== "" ? div : user.div ? user.div : "",
+        rollno: rollno !== "" ? rollno : user.rollno ? user.rollno : "",
         mobile_no:
-          mobileno !== 0 ? mobileno : (user.mobile_no ? user.mobile_no : 0),
-        DOB: DOB !== "" ? DOB : (user.DOB ? user.DOB : ""),
-        gender: gender !== "" ? gender : (user.gender ? user.gender : ""),
+          mobileno !== 0 ? mobileno : user.mobile_no ? user.mobile_no : 0,
+        DOB: DOB !== "" ? DOB : user.DOB ? user.DOB : "",
+        gender: gender !== "" ? gender : user.gender ? user.gender : "",
         category:
-          category !== "" ? category : (user.category ? user.category : ""),
-        pan: pan !== "" ? pan : (user.pan ? user.pan : ""),
-        aadhar: aadhar !== "" ? aadhar : (user.aadhar ? user.aadhar : ""),
-        PWD: pwd !== "" ? pwd : (user.PWD ? user.PWD : ""),
+          category !== "" ? category : user.category ? user.category : "",
+        pan: pan !== "" ? pan : user.pan ? user.pan : "",
+        aadhar: aadhar !== "" ? aadhar : user.aadhar ? user.aadhar : "",
+        PWD: pwd !== "" ? pwd : user.PWD ? user.PWD : "",
         blood_grp:
-          bloodgrp !== "" ? bloodgrp : (user.blood_grp ? user.blood_grp : ""),
+          bloodgrp !== "" ? bloodgrp : user.blood_grp ? user.blood_grp : "",
       };
       data.mobile_no = parseInt(data.mobile_no);
       // console.log(data);
-      await axios.put(`/api/students/student/profile/update/${user._id}`,data);
+      if(selectedFile1){
+        await axios.put(`/api/students/student/profile/update_profile/${user._id}`, dp_data)
+      }
+      await axios.put(`/api/students/student/profile/update/${user._id}`, data);
       setEdit_personal_value("EDIT");
       setEdit_personal(true);
       window.alert("Profile Updated Successfully");
@@ -120,10 +146,33 @@ function Personal_Details() {
             <div className="imgsection">
               <center>
                 <div className="img">
-                  <img src={defaultimg} alt="Default Img" />
+                  {dp ? (
+                    <img
+                      src={window.URL.createObjectURL(dp)}
+                      alt="Default Img"
+                    />
+                  ) : (
+                    <img src={defaultimg} alt="Default Img" />
+                  )}
                 </div>
                 <div className="addimgbtn">
-                  <Button>Add Img</Button>
+                  <Button
+                    id="outlined-btn"
+                    // variant="contained"
+                    component="label"
+                  >
+                    <div className="uploadmarksheet">
+                      {/* <i class="fa-solid fa-upload"></i> */}
+                      Add Img
+                    </div>
+                    <input
+                      hidden
+                      accept=".jpg, .jpeg, .png"
+                      multiple
+                      type="file"
+                      onChange={handleImage1}
+                    />
+                  </Button>
                 </div>
               </center>
             </div>
@@ -201,7 +250,7 @@ function Personal_Details() {
                 label="DOB"
                 name="DOB"
                 placeholder="DOB"
-                value={DOB==="" ? moment(user.DOB).format("YYYY-MM-DD") : DOB}
+                value={DOB === "" ? moment(user.DOB).format("YYYY-MM-DD") : DOB}
                 onChange={(e) => setDob(e.target.value)}
                 disabled={edit_pesonal}
               />
@@ -258,14 +307,14 @@ function Personal_Details() {
         </div>
 
         {/* parent details */}
-        <Parents_Details user={user}/>
+        <Parents_Details user={user} />
         <br />
         {/* address details  */}
-        <Address_Details user={user}/>
+        <Address_Details user={user} />
 
         {/* 10th 12th details  */}
 
-        <Tenth_Twelth user={user}/>
+        <Tenth_Twelth user={user} />
 
         <br />
         <br />
