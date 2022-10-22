@@ -142,6 +142,7 @@ function Tenth_Twelth({ user }) {
               variant="contained"
               component="label"
               size="small"
+              disabled={edit_pesonal}
             >
               <div className="uploadmarksheet">
                 <i class="fa-solid fa-upload"></i>
@@ -174,6 +175,7 @@ function Tenth_Twelth({ user }) {
               variant="contained"
               component="label"
               size="small"
+              disabled={edit_pesonal}
             >
               <div className="uploadmarksheet">
                 <i class="fa-solid fa-upload"></i>

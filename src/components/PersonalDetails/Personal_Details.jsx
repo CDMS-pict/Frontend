@@ -10,14 +10,22 @@ import Parents_Details from "./Parents_Details";
 import "./personal_details.css";
 import Tenth_Twelth from "./Tenth_Twelth";
 import moment from "moment-timezone";
+import { Document, Page ,pdfjs } from "react-pdf";
 
 function Personal_Details() {
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
+
   const [edit_pesonal, setEdit_personal] = useState(true);
   const [edit_pesonal_value, setEdit_personal_value] = useState("EDIT");
 
   // const [selectedFile, setSelectedFile] = useState("");
   const [selectedFile1, setSelectedFile1] = useState("");
-  const [dp,setDp] = useState("");
+  const [dp, setDp] = useState("");
 
   const [sfilename1, setFilename1] = useState("");
 
@@ -91,8 +99,8 @@ function Personal_Details() {
   const handleUpdate = async () => {
     try {
       const dp_data = {
-        profile:selectedFile1
-      }
+        profile: selectedFile1,
+      };
       const data = {
         fullname:
           fullname !== "" ? fullname : user.fullname ? user.fullname : "",
@@ -114,8 +122,11 @@ function Personal_Details() {
       };
       data.mobile_no = parseInt(data.mobile_no);
       // console.log(data);
-      if(selectedFile1){
-        await axios.put(`/api/students/student/profile/update_profile/${user._id}`, dp_data)
+      if (selectedFile1) {
+        await axios.put(
+          `/api/students/student/profile/update_profile/${user._id}`,
+          dp_data
+        );
       }
       await axios.put(`/api/students/student/profile/update/${user._id}`, data);
       setEdit_personal_value("EDIT");
@@ -125,6 +136,10 @@ function Personal_Details() {
       console.log("Something Wents Wrong");
     }
   };
+  const url = user.tenth_marksheet?.url;
+  console.log(url);
+  pdfjs.GlobalWorkerOptions.workerSrc = 
+  `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   return (
     <div>
       <Navbar />
@@ -151,10 +166,10 @@ function Personal_Details() {
                       src={window.URL.createObjectURL(dp)}
                       alt="Default Img"
                     />
+                  ) : user.profile ? (
+                    <img src={user.profile.url} alt="Default Img" />
                   ) : (
-                    user.profile ? 
-                      <img src={user.profile.url} alt="Default Img" />:
-                      <img src={defaultimg} alt="Default Img" />
+                    <img src={defaultimg} alt="Default Img" />
                   )}
                 </div>
                 <div className="addimgbtn">
@@ -162,6 +177,7 @@ function Personal_Details() {
                     id="outlined-btn"
                     // variant="contained"
                     component="label"
+                    disabled={edit_pesonal}
                   >
                     <div className="uploadmarksheet">
                       {/* <i class="fa-solid fa-upload"></i> */}
@@ -317,6 +333,14 @@ function Personal_Details() {
         {/* 10th 12th details  */}
 
         <Tenth_Twelth user={user} />
+
+        <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
+          <Page pageNumber={pageNumber} />
+        </Document>
+        <p>
+          Page {pageNumber} of {numPages}
+        </p>
+        {/* <img src={url}  alt="" /> */}
 
         <br />
         <br />
