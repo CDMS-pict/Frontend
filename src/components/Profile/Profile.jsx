@@ -5,8 +5,7 @@ import axios from "axios";
 import moment from "moment-timezone";
 axios.defaults.withCredentials = true;
 // let firstRender = true;
-function Profile({student}) {
-  
+function Profile({ student }) {
   const [user, setUser] = useState();
 
   // const refreshToken = async () => {
@@ -29,21 +28,26 @@ function Profile({student}) {
     return data;
   };
   useEffect(() => {
-      sednRequest().then((data) => setUser(data.user));
+    sednRequest().then((data) => setUser(data.user));
   }, []);
 
   return (
     <div className="profile">
       <div className="img_div">
         <div className="profileimg">
-          <img src={defaultimg} alt="" />
+          {user?.profile ? (
+            <img src={user.profile.url} alt="Default Img" />
+          ) : (
+            <img src={defaultimg} alt="Default Img" />
+          )}
         </div>
       </div>
       <div className="short_details">
         <p>
           <div className="name_student">{user && user.fullname}</div>{" "}
           {user && user.collegeId} <br />
-          <b>Mobile no.</b>{user && user.mobileno}
+          <b>Mobile no.</b>
+          {user && user.mobileno}
         </p>
         {/* <br /> */}
         <p>
@@ -59,7 +63,7 @@ function Profile({student}) {
         </p>
         {/* <br /> */}
         <p>
-          <b>Current</b> <br /> {user && user.temporary_address }
+          <b>Current</b> <br /> {user && user.temporary_address}
         </p>
       </div>
       {/* <div className="view_more">

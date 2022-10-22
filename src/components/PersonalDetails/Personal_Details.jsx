@@ -152,7 +152,9 @@ function Personal_Details() {
                       alt="Default Img"
                     />
                   ) : (
-                    <img src={defaultimg} alt="Default Img" />
+                    user.profile ? 
+                      <img src={user.profile.url} alt="Default Img" />:
+                      <img src={defaultimg} alt="Default Img" />
                   )}
                 </div>
                 <div className="addimgbtn">
