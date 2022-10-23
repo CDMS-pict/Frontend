@@ -47,7 +47,7 @@ function Tenth_Twelth({ user }) {
   //   setEdit_personal(true);
   // };
 
-  const handleImage = (e, choice) => {
+  const handleImage = (e) => {
     const file = e.target.files[0];
     setFileToBase(file);
     setFilename(file.name);

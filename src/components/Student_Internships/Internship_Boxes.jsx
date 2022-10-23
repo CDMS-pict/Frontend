@@ -9,15 +9,51 @@ import "./internship.css";
 import axios from "axios";
 import DateInput from "./DateInput";
 import moment from "moment-timezone";
+import { Document, Page, pdfjs } from "react-pdf";
 
 function Internship_Boxes({ data, user }) {
   const [selectedFile, setSelectedFile] = useState("");
-  // const [company_name, setCompany_name] = useState("");
-  // const [start_date, setStart_date] = useState("");
-  // const [end_date, setEnd_date] = useState("");
-  // const [duration, setDuration] = useState("");
-  // const [role, setRole] = useState("");
-  // const [desc, setDesc] = useState("");
+  const [open1, setOpen1] = React.useState(false);
+  const [url, setUrl] = useState("");
+  const handleClose1 = () => setOpen1(false);
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
+  // console.log(data);
+  pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+  const onButtonClick = () => {
+    // using Java Script method to get PDF file
+    fetch(url).then((response) => {
+      response.blob().then((blob) => {
+        // Creating new object of PDF file
+        const fileURL = window.URL.createObjectURL(blob);
+        // Setting various property values
+        let alink = document.createElement("a");
+        alink.href = fileURL;
+        alink.download = url;
+        alink.setAttribute("Download", user.rollno + "_Marksheet");
+        alink.click();
+      });
+    });
+  };
+
+  const handleOffer = () => {
+    setUrl(data.offer_letter?.url);
+    setOpen1(true);
+  };
+  const handleCompletion = () => {
+    setUrl(data.letter_of_complition?.url);
+    setOpen1(true);
+  };
+  const [company_name, setCompany_name] = useState("");
+  const [start_date, setStart_date] = useState("");
+  const [end_date, setEnd_date] = useState("");
+  const [duration, setDuration] = useState("");
+  const [role, setRole] = useState("");
+  const [desc, setDesc] = useState("");
 
   const [sfilename, setFilename] = useState("");
   const handleImage = (e) => {
@@ -44,31 +80,32 @@ function Internship_Boxes({ data, user }) {
       letter_of_complition: selectedFile,
       student_id: user._id,
     };
-    // const datas = {
-    //   company_name:
-    //     company_name !== ""
-    //       ? company_name
-    //       : data.company_name
-    //       ? data.company_name
-    //       : "",
-    //   start_date:
-    //     start_date !== "" ? start_date : data.start_date ? data.start_date : "",
-    //   end_date: end_date !== "" ? end_date : data.end_date ? data.end_date : "",
-    //   duration: duration !== "" ? duration : data.duration ? data.duration : "",
-    //   role: role !== "" ? role : data.role ? data.role : "",
-    //   desc: desc !== "" ? desc : data.desc ? data.desc : "",
-    //   letter_of_complition: selectedFile
-    // };
+    const form_data = {
+      company_name:
+        company_name !== ""
+          ? company_name
+          : data.company_name
+          ? data.company_name
+          : "",
+      start_date:
+        start_date !== "" ? start_date : data.start_date ? data.start_date : "",
+      end_date: end_date !== "" ? end_date : data.end_date ? data.end_date : "",
+      duration: duration !== "" ? duration : data.duration ? data.duration : "",
+      role: role !== "" ? role : data.role ? data.role : "",
+      desc: desc !== "" ? desc : data.desc ? data.desc : "",
+    };
 
-    if (!selectedFile) {
-      // console.log(datas);
-      window.alert("All the fields are required");
-      return;
-    }
     try {
-      await axios.put(`/api/internships/updateInternship/${data._id}`, datas);
+      await axios.put(
+        `/api/internships/updateInternshipInfo/${data._id}`,
+        form_data
+      );
+      if (selectedFile) {
+        await axios.put(`/api/internships/updateInternship/${data._id}`, datas);
+      }
+      console.log(form_data);
       window.alert("Internship Data Updated Successfully");
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -76,15 +113,11 @@ function Internship_Boxes({ data, user }) {
   };
 
   const handleDelete = async () => {
-    const datas = {
-      student_id: user._id,
-    };
     try {
       await axios.delete(
-        `/api/internships/deleteInternship/${data._id}`,
-        datas
+        `/api/internships/deleteInternship/${user._id}/${data._id}`
       );
-      window.alert("Internship Detail Deleted Successfully");
+      window.alert("Internship Details Deleted Successfully");
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -114,13 +147,21 @@ function Internship_Boxes({ data, user }) {
           </p>
         </div>
         <div className="editbtndiv">
-          {data.offer_letter && (
-            <Button variant="outlined" className="editbtn e1">
+          {data.offer_letter?.url && (
+            <Button
+              variant="outlined"
+              className="editbtn e1"
+              onClick={handleOffer}
+            >
               Offer Letter
             </Button>
           )}
-          {data.letter_of_complition && (
-            <Button variant="outlined" className="editbtn e1">
+          {data.letter_of_complition?.url && (
+            <Button
+              variant="outlined"
+              className="editbtn e1"
+              onClick={handleCompletion}
+            >
               Complition Letter{" "}
             </Button>
           )}
@@ -149,50 +190,55 @@ function Internship_Boxes({ data, user }) {
                   name="Company Name"
                   placeholder="Enter Company name"
                   defaultValue={data.company_name}
-                  disabled
-                  // onChange={(e) => setCompany_name(e.target.value)}
+                  // disabled
+                  onChange={(e) => setCompany_name(e.target.value)}
                 />
 
                 <FormInput
                   name="Duration"
                   placeholder="Duration"
                   defaultValue={data.duration}
-                  disabled
-                  // onChange={(e) => setDuration(e.target.value)}
+                  // disabled
+                  onChange={(e) => setDuration(e.target.value)}
                 />
                 <FormInput
                   name="Role"
                   placeholder="Role"
                   defaultValue={data.role}
-                  disabled
-                  // onChange={(e) => setRole(e.target.value)}
+                  // disabled
+                  onChange={(e) => setRole(e.target.value)}
                 />
                 <FormInput
                   name="Description"
                   placeholder="Description"
                   defaultValue={data.desc}
-                  disabled
-                  // onChange={(e) => setDesc(e.target.value)}
+                  // disabled
+                  onChange={(e) => setDesc(e.target.value)}
                 />
-                {/* <center>
+                <center>
                   <DateInput
                     name="Start Date"
                     placeholder="Start Date"
                     label="Start Date"
-                    disabled
-                    // defaultValue={data.start_date}
+                    value={
+                      start_date === ""
+                        ? moment(data.start_date).format("YYYY-MM-DD")
+                        : start_date
+                    }
                     onChange={(e) => setStart_date(e.target.value)}
                   />
                   <DateInput
                     name="Start Date"
                     placeholder="End Date"
                     label="End Date"
-                    // defaultValue={data.end_date}
-
-                    disabled
+                    value={
+                      end_date === ""
+                        ? moment(data.end_date).format("YYYY-MM-DD")
+                        : end_date
+                    }
                     onChange={(e) => setEnd_date(e.target.value)}
                   />
-                </center> */}
+                </center>
                 <div className="intern1">
                   <Button
                     id="outlined-btn"
@@ -231,6 +277,46 @@ function Internship_Boxes({ data, user }) {
                   </Button>
                 </div>
               </center>
+            </Box>
+          </Fade>
+        </Modal>
+        <Modal
+          aria-describedby="transition-modal-description"
+          open={open1}
+          onClose={handleClose1}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open1}>
+            <Box className="boxmodal pdfbox">
+              {url && <Button onClick={onButtonClick}>Download PDF</Button>}
+              <Document
+                file={url}
+                onLoadSuccess={onDocumentLoadSuccess}
+                className="pdfdoc"
+              >
+                <Page pageNumber={pageNumber} />
+              </Document>
+              <div className="change_page_div">
+                <p
+                  onClick={() => setPageNumber(pageNumber - 1)}
+                  className="direction"
+                >
+                  {"<"}
+                </p>
+                <p>
+                  Page {pageNumber} of {numPages}
+                </p>
+                <p
+                  onClick={() => setPageNumber(pageNumber + 1)}
+                  className="direction"
+                >
+                  {">"}
+                </p>
+              </div>
             </Box>
           </Fade>
         </Modal>

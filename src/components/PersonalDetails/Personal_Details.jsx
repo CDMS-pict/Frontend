@@ -58,16 +58,6 @@ function Personal_Details() {
 
   const [user, setUser] = useState("");
 
-  // const refreshToken = async () => {
-  //   const res = await axios
-  //     .get("/api/students/refresh", {
-  //       withCredentials: true,
-  //     })
-  //     .catch((err) => console.log(err));
-
-  //   const data = await res.data;
-  //   return data;
-  // };
   const sednRequest = async () => {
     const res = await axios
       .get("/api/students/user", {
