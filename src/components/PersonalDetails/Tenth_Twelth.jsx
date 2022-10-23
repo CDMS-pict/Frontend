@@ -152,6 +152,7 @@ function Tenth_Twelth({ user }) {
         let alink = document.createElement("a");
         alink.href = fileURL;
         alink.download = url;
+        alink.setAttribute('Download' , user.rollno + "_Marksheet");
         alink.click();
       });
     });
