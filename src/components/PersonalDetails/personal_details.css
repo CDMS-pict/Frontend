@@ -61,7 +61,7 @@
     padding-left: 0%;
 }
 .tenth_details .forminput{ 
-    width: 35%;
+    width: 25%;
 }
 
 .tenth_twelth_marksheet{
@@ -70,11 +70,38 @@
     align-items: center;
     margin-top: 1.5%;
 }
+.pdfbox{
+    width: max-content;
+    position: relative;
+    max-height: 80vh;
+    
+    overflow: scroll;
+}
+.change_page_div{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.change_page_div p{
+    cursor: pointer;
+}
+.direction{
+    background-color: gray;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    color: white;
+}
 
 @media (max-width: 868px) {
+    .pdfbox{
+        max-height: auto;
+        width: auto;
+    }
     .details_body{
         display: flex;
         flex-direction: column;
+
     }
     .imgsection,
     .details_section{

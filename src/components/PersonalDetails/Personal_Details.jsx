@@ -10,15 +10,15 @@ import Parents_Details from "./Parents_Details";
 import "./personal_details.css";
 import Tenth_Twelth from "./Tenth_Twelth";
 import moment from "moment-timezone";
-import { Document, Page ,pdfjs } from "react-pdf";
 
 function Personal_Details() {
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
+  // const [numPages, setNumPages] = useState(null);
+  // const [pageNumber, setPageNumber] = useState(1);
 
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
+  // function onDocumentLoadSuccess({ numPages }) {
+  //   setNumPages(numPages);
+  //   setPageNumber(numPages);
+  // }
 
   const [edit_pesonal, setEdit_personal] = useState(true);
   const [edit_pesonal_value, setEdit_personal_value] = useState("EDIT");
@@ -27,13 +27,13 @@ function Personal_Details() {
   const [selectedFile1, setSelectedFile1] = useState("");
   const [dp, setDp] = useState("");
 
-  const [sfilename1, setFilename1] = useState("");
+  // const [sfilename1, setFilename1] = useState("");
 
   const handleImage1 = (e) => {
     const file = e.target.files[0];
     setDp(file);
     setFileToBase1(file);
-    setFilename1(file.name);
+    // setFilename1(file.name);
     // console.log(file);
   };
 
@@ -136,10 +136,7 @@ function Personal_Details() {
       console.log("Something Wents Wrong");
     }
   };
-  const url = user.tenth_marksheet?.url;
-  console.log(url);
-  pdfjs.GlobalWorkerOptions.workerSrc = 
-  `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+  
   return (
     <div>
       <Navbar />
@@ -334,13 +331,7 @@ function Personal_Details() {
 
         <Tenth_Twelth user={user} />
 
-        <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
-          <Page pageNumber={pageNumber} />
-        </Document>
-        <p>
-          Page {pageNumber} of {numPages}
-        </p>
-        {/* <img src={url}  alt="" /> */}
+        
 
         <br />
         <br />

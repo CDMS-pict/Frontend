@@ -1,9 +1,36 @@
-import { Button } from "@mui/material";
+import { Box, Button, Fade, Modal } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import FormInput from "../Student_Internships/FormInput";
+import Backdrop from "@mui/material/Backdrop";
+import { Document, Page, pdfjs } from "react-pdf";
 
 function Tenth_Twelth({ user }) {
+  const [open, setOpen] = React.useState(false);
+  const [url, setUrl] = useState("");
+  // var url = user.tenth_marksheet?.url;
+  const handleOpen = () => {
+    setUrl(user.tenth_marksheet?.url);
+    setOpen(true);
+  };
+  const handleOpen1 = () => {
+    setUrl(user.twelth_marksheet?.url);
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+    // setPageNumber(numPages);
+  }
+
+  // const url = user.tenth_marksheet?.url;
+  // console.log(url);
+  pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
   const [edit_pesonal, setEdit_personal] = useState(true);
   const [edit_pesonal_value, setEdit_personal_value] = useState("EDIT");
 
@@ -91,13 +118,13 @@ function Tenth_Twelth({ user }) {
         `/api/students/student/profile/update/${user._id}`,
         data_t_tw
       );
-     if(selectedFile){
-      await axios.put(
-        `/api/students/student/profile/update_t_marks/${user._id}`,
-        data_t
-      );
-     }
-      if(selectedFile1){
+      if (selectedFile) {
+        await axios.put(
+          `/api/students/student/profile/update_t_marks/${user._id}`,
+          data_t
+        );
+      }
+      if (selectedFile1) {
         await axios.put(
           `/api/students/student/profile/update_tw_marks/${user._id}`,
           data_tw
@@ -111,6 +138,23 @@ function Tenth_Twelth({ user }) {
       console.log(err);
       window.alert("Unable to Update The Data");
     }
+  };
+
+  //download pdfs
+
+  const onButtonClick = () => {
+    // using Java Script method to get PDF file
+    fetch(url).then((response) => {
+      response.blob().then((blob) => {
+        // Creating new object of PDF file
+        const fileURL = window.URL.createObjectURL(blob);
+        // Setting various property values
+        let alink = document.createElement("a");
+        alink.href = fileURL;
+        alink.download = url;
+        alink.click();
+      });
+    });
   };
   return (
     <div>
@@ -160,6 +204,7 @@ function Tenth_Twelth({ user }) {
                 {sfilename}
               </span>
             </Button>
+            <Button onClick={handleOpen}>View</Button>
           </div>
           <FormInput
             label="12th Percentage/CGPA"
@@ -193,9 +238,50 @@ function Tenth_Twelth({ user }) {
                 {sfilename1}
               </span>
             </Button>
+            <Button onClick={handleOpen1}>View</Button>
           </div>
         </div>
       </div>
+      <Modal
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <Box className="boxmodal pdfbox">
+            <Button onClick={onButtonClick}>Download PDF</Button>
+            <Document
+              file={url}
+              onLoadSuccess={onDocumentLoadSuccess}
+              className="pdfdoc"
+            >
+              <Page pageNumber={pageNumber} />
+            </Document>
+            <div className="change_page_div">
+              <p
+                onClick={() => setPageNumber(pageNumber - 1)}
+                className="direction"
+              >
+                {"<"}
+              </p>
+              <p>
+                Page {pageNumber} of {numPages}
+              </p>
+              <p
+                onClick={() => setPageNumber(pageNumber + 1)}
+                className="direction"
+              >
+                {">"}
+              </p>
+            </div>
+          </Box>
+        </Fade>
+      </Modal>
     </div>
   );
 }
