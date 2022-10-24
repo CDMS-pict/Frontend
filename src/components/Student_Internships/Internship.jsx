@@ -92,6 +92,7 @@ function Internship() {
       student_id: user._id,
       student_name: user.fullname,
       student_div: user.div,
+      student_roll: user.rollno
     };
 
     if (

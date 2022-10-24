@@ -40,13 +40,17 @@ function App() {
   //   return data;
   // };
   const sednRequest = async () => {
-    const res = await axios
-      .get("/api/students/user", {
-        withCredentials: true,
-      })
-      .catch((err) => console.log(err));
-    const data = await res.data;
-    return data;
+    try {
+      const res = await axios
+        .get("/api/students/user", {
+          withCredentials: true,
+        })
+        .catch((err) => console.log(err));
+      const data = await res.data;
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     sednRequest().then((data) => setUser(data.user));
@@ -66,7 +70,7 @@ function App() {
             <Route
               exact
               path="/student/Academics"
-              element={<AcademicDetails user={user}/>}
+              element={<AcademicDetails user={user} />}
             />
             <Route
               exact
@@ -96,6 +100,14 @@ function App() {
             <Route exact path="/login" element={<LoginForm />} />
             <Route exact path="/signup" element={<Form />} />
             <Route exact path="/" element={<LoginForm />} />
+            {/* <Route exact path="/dashboard" element={<LoginForm />} />
+            <Route exact path="/student/Academics" element={<LoginForm />} />
+            <Route exact path="/student/personal_details" element={<LoginForm />} />
+            <Route exact path="/student/internship" element={<LoginForm />} />
+            <Route exact path="/teachers_dashboard" element={<LoginForm />} />
+            <Route exact path="/teachers_dashboard/internship" element={<LoginForm />} />
+            <Route exact path="/teachers_dashboard/students" element={<LoginForm />} /> */}
+            {/* <Route exact path="/teachers_dashboard/students" element={<LoginForm />} /> */}
           </Routes>
         )}
       </Router>
