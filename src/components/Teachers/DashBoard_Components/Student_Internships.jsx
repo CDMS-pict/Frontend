@@ -56,7 +56,7 @@ function Student_Internships() {
       id: i + 1,
       student_name: rowsdata[i].student_name,
       student_div: rowsdata[i].student_div,
-      student_branch: "ENTC",
+      student_branch: rowsdata[i].student_branch,
       company_name: rowsdata[i].company_name,
       start_date: rowsdata[i].start_date,
       end_date: rowsdata[i].end_date,

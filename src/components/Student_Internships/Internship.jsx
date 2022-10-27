@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import FormInput from "./FormInput";
-import Internship_Boxes from "./Internship_Boxes";
+import InternshipBoxes from "./InternshipBoxes";
 import axios from "axios";
 import DateInput from "./DateInput";
 
@@ -92,7 +92,8 @@ function Internship() {
       student_id: user._id,
       student_name: user.fullname,
       student_div: user.div,
-      student_roll: user.rollno
+      student_roll: user.rollno,
+      student_year: user.div[0] + user.div[1]
     };
 
     if (
@@ -127,9 +128,9 @@ function Internship() {
         </div>
       </div>
       <center>
-        <div className="internship_boxes">
+        <div className="internshipboxes">
           {datas.map((d) => (
-            <Internship_Boxes data={d} user ={user} />
+            <InternshipBoxes data={d} user ={user} />
           ))}
         </div>
       </center>

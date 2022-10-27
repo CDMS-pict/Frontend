@@ -30,7 +30,6 @@ function Profile({ student }) {
   useEffect(() => {
     sednRequest().then((data) => setUser(data.user));
   }, []);
-
   return (
     <div className="profile">
       <div className="img_div">
@@ -47,7 +46,7 @@ function Profile({ student }) {
           <div className="name_student">{user && user.fullname}</div>{" "}
           {user && user.collegeId} <br />
           <b>Mobile no.</b>
-          {user && user.mobileno}
+          {user && user.mobile_no}
         </p>
         {/* <br /> */}
         <p>
